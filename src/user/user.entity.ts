@@ -1,12 +1,15 @@
-import { DriverTravelEntity } from 'src/driver-travel/driver-travel.entity';
 import {
-  Column,
   Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
   OneToMany,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  JoinTable,
 } from 'typeorm';
+import { PreferenceEntity } from '../preference/preference.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
+import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
 
 @Entity()
 export class UserEntity {
@@ -66,6 +69,10 @@ export class UserEntity {
 
   @Column()
   verifiedUser: Boolean;
+
+  @JoinTable()
+  @ManyToMany(() => PreferenceEntity, (preferences) => preferences.users)
+  preferences: PerformanceEntry[];
 
   @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
   vehicles: VehicleEntity[];
