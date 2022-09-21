@@ -10,6 +10,7 @@ import {
 import { PreferenceEntity } from 'src/preference/preference.entity';
 import { UserEntity } from '../user/user.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
+import { AddressEntity } from 'src/address/address.entity';
 
 @Entity()
 export class DriverTravelEntity {
@@ -40,4 +41,13 @@ export class DriverTravelEntity {
 
   @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.driverTravels)
   vehicle: VehicleEntity;
+
+  @ManyToOne(() => AddressEntity, (origin) => origin.originDriverTravels)
+  origin: AddressEntity;
+
+  @ManyToOne(
+    () => AddressEntity,
+    (destination) => destination.destinationDriverTravels,
+  )
+  destination: AddressEntity;
 }

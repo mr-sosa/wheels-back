@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinTable,
 } from 'typeorm';
+import { AddressEntity } from '../address/address.entity';
 import { PreferenceEntity } from '../preference/preference.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
@@ -69,6 +70,10 @@ export class UserEntity {
 
   @Column()
   verifiedUser: Boolean;
+
+  @JoinTable()
+  @ManyToMany(() => AddressEntity, (addresses) => addresses.users)
+  addresses: AddressEntity[];
 
   @JoinTable()
   @ManyToMany(() => PreferenceEntity, (preferences) => preferences.users)
