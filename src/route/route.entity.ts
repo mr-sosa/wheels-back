@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
+import { StepEntity } from '../step/step.entity';
 
 @Entity()
 export class RouteEntity {
@@ -17,4 +24,10 @@ export class RouteEntity {
   */
   @ManyToOne(() => DriverTravelEntity, (driverTravel) => driverTravel.routes)
   driverTravel: DriverTravelEntity;
+
+  /*
+  Step
+  */
+  @OneToMany(() => StepEntity, (steps) => steps.route)
+  steps: StepEntity[];
 }

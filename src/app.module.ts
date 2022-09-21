@@ -8,9 +8,10 @@ import { PreferenceModule } from './preference/preference.module';
 import { AddressModule } from './address/address.module';
 import { PassengerTravelModule } from './passenger-travel/passenger-travel.module';
 import { RouteModule } from './route/route.module';
+import { StepModule } from './step/step.module';
 
 @Module({
-  imports: [UserModule, VehicleModule, DriverTravelModule, PreferenceModule, AddressModule, PassengerTravelModule, RouteModule],
+  imports: [UserModule, VehicleModule, DriverTravelModule, PreferenceModule, AddressModule, PassengerTravelModule, RouteModule, StepModule],
   controllers: [AppController],
   providers: [AppService],
 })
