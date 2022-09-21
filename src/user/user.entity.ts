@@ -1,10 +1,5 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { VehicleEntity } from '../vehicle/vehicle.entity';
 
 @Entity()
 export class UserEntity {
@@ -64,4 +59,7 @@ export class UserEntity {
 
   @Column()
   verifiedUser: Boolean;
+
+  @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
+  vehicles: VehicleEntity[];
 }
