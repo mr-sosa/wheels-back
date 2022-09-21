@@ -4,10 +4,13 @@ import {
   Column,
   ManyToMany,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
+import { PointEntity } from '../point/point.entity';
 
 @Entity()
 export class AddressEntity {
@@ -88,4 +91,11 @@ export class AddressEntity {
     (driverTravels) => driverTravels.destination,
   )
   destinationDriverTravels: DriverTravelEntity[];
+
+  /*
+  Point
+  */
+  @JoinColumn()
+  @OneToOne(() => PointEntity, (point) => point.address)
+  point: PointEntity;
 }
