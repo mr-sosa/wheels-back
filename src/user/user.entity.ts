@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { DriverTravelEntity } from 'src/driver-travel/driver-travel.entity';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 
 @Entity()
@@ -62,4 +69,13 @@ export class UserEntity {
 
   @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
   vehicles: VehicleEntity[];
+
+  @OneToMany(() => DriverTravelEntity, (driverTravels) => driverTravels.driver)
+  driverTravelsByDriver: DriverTravelEntity[];
+
+  @ManyToOne(
+    () => DriverTravelEntity,
+    (driverTravel) => driverTravel.passengers,
+  )
+  driverTravelByPassenger: DriverTravelEntity;
 }
