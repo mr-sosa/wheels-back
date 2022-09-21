@@ -12,6 +12,7 @@ import { UserEntity } from '../user/user.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 import { AddressEntity } from '../address/address.entity';
 import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
+import { RouteEntity } from '../route/route.entity';
 
 @Entity()
 export class DriverTravelEntity {
@@ -72,4 +73,10 @@ export class DriverTravelEntity {
     (passengerTravels) => passengerTravels.driverTravel,
   )
   passengerTravels: PassengerTravelEntity;
+
+  /*
+  Route
+  */
+  @OneToMany(() => RouteEntity, (routes) => routes.driverTravel)
+  routes: RouteEntity[];
 }
