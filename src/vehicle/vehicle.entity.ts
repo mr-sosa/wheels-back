@@ -34,9 +34,15 @@ export class VehicleEntity {
   @Column()
   photo: String;
 
+  /*
+  User
+  */
   @ManyToOne(() => UserEntity, (user) => user.vehicles)
   user: UserEntity;
 
+  /*
+  DriverTravel
+  */
   @ManyToOne(() => DriverTravelEntity, (driverTravels) => driverTravels.vehicle)
   driverTravels: DriverTravelEntity[];
 }

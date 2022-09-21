@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { AddressEntity } from '../address/address.entity';
 import { PreferenceEntity } from '../preference/preference.entity';
+import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
 
@@ -71,17 +72,39 @@ export class UserEntity {
   @Column()
   verifiedUser: Boolean;
 
+  /*
+  Address
+  */
   @JoinTable()
   @ManyToMany(() => AddressEntity, (addresses) => addresses.users)
   addresses: AddressEntity[];
 
+  /*
+  Preference
+  */
   @JoinTable()
   @ManyToMany(() => PreferenceEntity, (preferences) => preferences.users)
   preferences: PerformanceEntry[];
 
+  /*
+  PassengerTravel
+  */
+  @JoinTable()
+  @ManyToMany(
+    () => PassengerTravelEntity,
+    (passengerTravels) => passengerTravels.passengers,
+  )
+  passengerTravels: PassengerTravelEntity[];
+
+  /*
+  Vehicle
+  */
   @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
   vehicles: VehicleEntity[];
 
+  /*
+  DriverTravel
+  */
   @OneToMany(() => DriverTravelEntity, (driverTravels) => driverTravels.driver)
   driverTravelsByDriver: DriverTravelEntity[];
 

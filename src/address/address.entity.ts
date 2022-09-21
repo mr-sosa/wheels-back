@@ -4,10 +4,9 @@ import {
   Column,
   ManyToMany,
   OneToMany,
-  ManyToOne,
-  JoinTable,
 } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
+import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
 
 @Entity()
@@ -57,9 +56,30 @@ export class AddressEntity {
   @Column()
   description: String;
 
+  /*
+  User
+  */
   @ManyToMany(() => UserEntity, (users) => users.addresses)
   users: UserEntity[];
 
+  /*
+  PassengerTravel
+  */
+  @OneToMany(
+    () => PassengerTravelEntity,
+    (originPassengerTravels) => originPassengerTravels.origin,
+  )
+  originPassengerTravels: PassengerTravelEntity[];
+
+  @OneToMany(
+    () => PassengerTravelEntity,
+    (destinationPassengerTravels) => destinationPassengerTravels.destination,
+  )
+  destinationPassengerTravels: PassengerTravelEntity[];
+
+  /*
+  DriverTravel
+  */
   @OneToMany(() => DriverTravelEntity, (driverTravels) => driverTravels.origin)
   originDriverTravels: DriverTravelEntity[];
 

@@ -10,7 +10,8 @@ import {
 import { PreferenceEntity } from 'src/preference/preference.entity';
 import { UserEntity } from '../user/user.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
-import { AddressEntity } from 'src/address/address.entity';
+import { AddressEntity } from '../address/address.entity';
+import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
 
 @Entity()
 export class DriverTravelEntity {
@@ -26,6 +27,9 @@ export class DriverTravelEntity {
   @Column()
   state: String;
 
+  /*
+  Preference
+  */
   @JoinTable()
   @ManyToMany(
     () => PreferenceEntity,
@@ -33,15 +37,24 @@ export class DriverTravelEntity {
   )
   preferences: PerformanceEntry[];
 
+  /*
+  User
+  */
   @ManyToOne(() => UserEntity, (user) => user.driverTravelsByDriver)
   driver: UserEntity;
 
   @OneToMany(() => UserEntity, (user) => user.driverTravelByPassenger)
   passengers: UserEntity[];
 
+  /*
+  Vehicle
+  */
   @ManyToOne(() => VehicleEntity, (vehicle) => vehicle.driverTravels)
   vehicle: VehicleEntity;
 
+  /*
+  Address
+  */
   @ManyToOne(() => AddressEntity, (origin) => origin.originDriverTravels)
   origin: AddressEntity;
 
@@ -50,4 +63,13 @@ export class DriverTravelEntity {
     (destination) => destination.destinationDriverTravels,
   )
   destination: AddressEntity;
+
+  /*
+  PassengerTravel
+  */
+  @OneToMany(
+    () => PassengerTravelEntity,
+    (passengerTravels) => passengerTravels.driverTravel,
+  )
+  passengerTravels: PassengerTravelEntity;
 }

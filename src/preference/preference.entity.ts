@@ -10,9 +10,15 @@ export class PreferenceEntity {
   @Column()
   type: String;
 
+  /*
+  User
+  */
   @ManyToMany(() => UserEntity, (users) => users.preferences)
   users: UserEntity[];
 
+  /*
+  DriverTravel
+  */
   @ManyToMany(
     () => DriverTravelEntity,
     (driverTravels) => driverTravels.preferences,
