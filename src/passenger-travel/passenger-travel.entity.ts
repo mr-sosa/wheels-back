@@ -23,6 +23,9 @@ export class PassengerTravelEntity {
   @Column()
   date: Date;
 
+  @Column()
+  state: string;
+
   /*
   User
   */
