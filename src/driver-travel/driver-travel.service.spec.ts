@@ -93,7 +93,7 @@ describe('DriverTravelService', () => {
       where: { id: newDriverTravel.id },
     });
     expect(driverTravel).not.toBeNull();
-    expect(driverTravel.date.getDate()).toBeGreaterThan(Date.now());
+    expect(driverTravel.date.getTime()).toBeGreaterThan(Date.now());
     expect(driverTravel.spaceAvailable).toBeGreaterThanOrEqual(0);
     expect(driverTravel.spaceAvailable).toBeLessThanOrEqual(7);
     expect(driverTravel.date).toEqual(storedDriverTravel.date);
@@ -117,7 +117,7 @@ describe('DriverTravelService', () => {
       where: { id: driverTravel.id },
     });
     expect(storedDriverTravel).not.toBeNull();
-    expect(storedDriverTravel.date.getDate()).toBeGreaterThan(Date.now());
+    expect(storedDriverTravel.date.getTime()).toBeGreaterThan(Date.now());
     expect(storedDriverTravel.spaceAvailable).toBeGreaterThanOrEqual(0);
     expect(storedDriverTravel.spaceAvailable).toBeLessThanOrEqual(7);
     expect(driverTravel.date).toEqual(storedDriverTravel.date);

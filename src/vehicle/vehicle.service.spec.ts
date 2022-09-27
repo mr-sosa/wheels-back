@@ -100,8 +100,8 @@ describe('VehicleService', () => {
     });
     expect(vehicle).not.toBeNull();
     expect(vehicle.licensePlate.length).toEqual(7);
-    expect(vehicle.soatExpedition).toBeLessThan(Date.now());
-    expect(vehicle.soatExpiration).toBeGreaterThan(Date.now());
+    expect(vehicle.soatExpedition.getTime()).toBeLessThan(Date.now());
+    expect(vehicle.soatExpiration.getTime()).toBeGreaterThan(Date.now());
     expect(vehicle.licensePlate).toEqual(storedVehicle.licensePlate);
     expect(vehicle.brand).toEqual(storedVehicle.brand);
     expect(vehicle.serie).toEqual(storedVehicle.serie);
@@ -134,8 +134,8 @@ describe('VehicleService', () => {
     });
     expect(storedVehicle).not.toBeNull();
     expect(vehicle.licensePlate.length).toEqual(7);
-    expect(vehicle.soatExpedition).toBeLessThan(Date.now());
-    expect(vehicle.soatExpiration).toBeGreaterThan(Date.now());
+    expect(vehicle.soatExpedition.getTime()).toBeLessThan(Date.now());
+    expect(vehicle.soatExpiration.getTime()).toBeGreaterThan(Date.now());
     expect(vehicle.licensePlate).toEqual(storedVehicle.licensePlate);
     expect(vehicle.brand).toEqual(storedVehicle.brand);
     expect(vehicle.serie).toEqual(storedVehicle.serie);

@@ -92,7 +92,7 @@ describe('PassengerTravelService', () => {
         where: { id: newPassengerTravel.id },
       });
     expect(passengerTravel).not.toBeNull();
-    expect(passengerTravel.date.getDate()).toBeGreaterThan(Date.now());
+    expect(passengerTravel.date.getTime()).toBeGreaterThan(Date.now());
     expect(passengerTravel.quota).toBeGreaterThanOrEqual(0);
     expect(passengerTravel.quota).toBeLessThanOrEqual(7);
     expect(passengerTravel.cost).toBeGreaterThanOrEqual(0);
@@ -118,7 +118,7 @@ describe('PassengerTravelService', () => {
         where: { id: passengerTravel.id },
       });
     expect(storedPassengerTravel).not.toBeNull();
-    expect(storedPassengerTravel.date.getDate()).toBeGreaterThan(Date.now());
+    expect(storedPassengerTravel.date.getTime()).toBeGreaterThan(Date.now());
     expect(storedPassengerTravel.quota).toBeGreaterThanOrEqual(0);
     expect(storedPassengerTravel.quota).toBeLessThanOrEqual(7);
     expect(passengerTravel.cost).toBeGreaterThanOrEqual(0);

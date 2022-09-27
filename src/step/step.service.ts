@@ -16,7 +16,7 @@ export class StepService {
 
   async findAll(): Promise<StepEntity[]> {
     return await this.stepRepository.find({
-      relations: ['stepStart', 'stepEnd', 'address'],
+      relations: ['startPoint', 'endPoint', 'route'],
     });
   }
 
