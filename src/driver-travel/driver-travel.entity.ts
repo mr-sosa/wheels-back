@@ -7,7 +7,7 @@ import {
   OneToMany,
   JoinTable,
 } from 'typeorm';
-import { PreferenceEntity } from 'src/preference/preference.entity';
+import { PreferenceEntity } from '../preference/preference.entity';
 import { UserEntity } from '../user/user.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 import { AddressEntity } from '../address/address.entity';

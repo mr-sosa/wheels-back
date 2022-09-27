@@ -5,9 +5,9 @@ import { PassengerTravelEntity } from '../../passenger-travel/passenger-travel.e
 import { PointEntity } from '../../point/point.entity';
 import { PreferenceEntity } from '../../preference/preference.entity';
 import { RouteEntity } from '../../route/route.entity';
-import { StepEntity } from 'src/step/step.entity';
-import { UserEntity } from 'src/user/user.entity';
-import { VehicleEntity } from 'src/vehicle/vehicle.entity';
+import { StepEntity } from '../../step/step.entity';
+import { UserEntity } from '../../user/user.entity';
+import { VehicleEntity } from '../../vehicle/vehicle.entity';
 
 export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forRoot({
