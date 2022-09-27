@@ -145,12 +145,12 @@ describe('AddressService', () => {
     address.location = faker.datatype.string();
     address.name = faker.datatype.string();
     address.mainRoad = faker.datatype.string();
-    address.firstNumber = faker.datatype.number({ min = 1 });
+    address.firstNumber = faker.datatype.number({ min: 1 });
     address.firstLetter = faker.datatype.string(1).toLocaleUpperCase();
     address.fisrtQuadrant = faker.address
       .cardinalDirection()
       .toLocaleUpperCase();
-    address.secondNumber = faker.datatype.number({ min = 1 });
+    address.secondNumber = faker.datatype.number({ min: 1 });
     address.secondLetter = faker.datatype.string(1).toLocaleUpperCase();
     address.secondQuadrant = faker.address
       .cardinalDirection()
