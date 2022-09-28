@@ -9,9 +9,7 @@ pipeline {
        stage('Checkout') {
           steps {
              scmSkip(deleteBuild: true, skipPattern:'.*\\[ci-skip\\].*')
-
-
-             git branch: 'master',
+             git branch: 'main',
                 credentialsId: env.GIT_CREDENTIAL_ID,
                 url: 'https://github.com/SELF-Software-Evolution-Lab/' + env.GIT_REPO
           }
@@ -33,8 +31,8 @@ pipeline {
                 sh('git config --global user.name "ci-isis2603"')
                 sh('git add ./reports/index.html')
                 sh('git commit -m "[ci-skip] GitInspector report added"')
-                sh('git pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/SELF-Software-Evolution-Lab/${GIT_REPO} master')
-                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/SELF-Software-Evolution-Lab/${GIT_REPO} master')
+                sh('git pull https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/SELF-Software-Evolution-Lab/${GIT_REPO} main')
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/SELF-Software-Evolution-Lab/${GIT_REPO} main')
              }
           }
        }
