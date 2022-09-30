@@ -1,6 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressEntity } from '../../address/address.entity';
 import { DriverTravelEntity } from '../../driver-travel/driver-travel.entity';
+import { OpinionEntity } from '../../opinion/opinion.entity';
 import { PassengerTravelEntity } from '../../passenger-travel/passenger-travel.entity';
 import { PointEntity } from '../../point/point.entity';
 import { PreferenceEntity } from '../../preference/preference.entity';
@@ -17,6 +18,7 @@ export const TypeOrmTestingConfig = () => [
     entities: [
       AddressEntity,
       DriverTravelEntity,
+      OpinionEntity,
       PassengerTravelEntity,
       PointEntity,
       PreferenceEntity,
@@ -31,6 +33,7 @@ export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forFeature([
     AddressEntity,
     DriverTravelEntity,
+    OpinionEntity,
     PassengerTravelEntity,
     PointEntity,
     PreferenceEntity,

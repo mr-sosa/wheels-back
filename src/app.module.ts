@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddressModule } from './address/address.module';
 import { DriverTravelModule } from './driver-travel/driver-travel.module';
+import { OpinionModule } from './opinion/opinion.module';
 import { PassengerTravelModule } from './passenger-travel/passenger-travel.module';
 import { PointModule } from './point/point.module';
 import { PreferenceModule } from './preference/preference.module';
@@ -13,6 +14,7 @@ import { UserModule } from './user/user.module';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { AddressEntity } from './address/address.entity';
 import { DriverTravelEntity } from './driver-travel/driver-travel.entity';
+import { OpinionEntity } from './opinion/opinion.entity';
 import { PassengerTravelEntity } from './passenger-travel/passenger-travel.entity';
 import { PointEntity } from './point/point.entity';
 import { PreferenceEntity } from './preference/preference.entity';
@@ -33,6 +35,7 @@ import { VehicleEntity } from './vehicle/vehicle.entity';
       entities: [
         AddressEntity,
         DriverTravelEntity,
+        OpinionEntity,
         PassengerTravelEntity,
         PointEntity,
         PreferenceEntity,
@@ -54,6 +57,7 @@ import { VehicleEntity } from './vehicle/vehicle.entity';
     StepModule,
     UserModule,
     VehicleModule,
+    OpinionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

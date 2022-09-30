@@ -12,6 +12,7 @@ import { PreferenceEntity } from '../preference/preference.entity';
 import { PassengerTravelEntity } from '../passenger-travel/passenger-travel.entity';
 import { VehicleEntity } from '../vehicle/vehicle.entity';
 import { DriverTravelEntity } from '../driver-travel/driver-travel.entity';
+import { OpinionEntity } from '../opinion/opinion.entity';
 
 @Entity()
 export class UserEntity {
@@ -113,4 +114,15 @@ export class UserEntity {
     (driverTravel) => driverTravel.passengers,
   )
   driverTravelByPassenger: DriverTravelEntity;
+
+  /*
+  Opinion
+  */
+  @JoinTable()
+  @ManyToMany(() => OpinionEntity, (opinionsReceived) => opinionsReceived.users)
+  opinionsReceived: OpinionEntity[];
+
+  @JoinTable()
+  @ManyToMany(() => OpinionEntity, (opinionsMade) => opinionsMade.commentators)
+  opinionsMade: OpinionEntity[];
 }
