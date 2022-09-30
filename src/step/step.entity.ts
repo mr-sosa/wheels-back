@@ -34,6 +34,6 @@ export class StepEntity {
   startPoint: PointEntity;
 
   @JoinColumn()
-  @OneToOne(() => PointEntity, (endPoint) => endPoint.stepStart)
+  @OneToOne(() => PointEntity, (endPoint) => endPoint.stepEnd)
   endPoint: PointEntity;
 }
