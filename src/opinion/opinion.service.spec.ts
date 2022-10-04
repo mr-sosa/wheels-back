@@ -36,7 +36,7 @@ describe('OpinionService', () => {
       const opinion: OpinionEntity = await repository.save({
         comment: faker.datatype.string(),
         date: faker.date.past(),
-        score: 'GOOD',
+        score: 'BAD',
       });
       opinionsList.push(opinion);
     }
@@ -69,7 +69,7 @@ describe('OpinionService', () => {
       id: '',
       comment: faker.datatype.string(),
       date: faker.date.past(),
-      score: 'GOOD',
+      score: 'BAD',
       users: null,
       commentators: null,
     };
@@ -86,11 +86,27 @@ describe('OpinionService', () => {
     expect(opinion.date).toEqual(storedOpinion.date);
   });
 
+  it('create should return a new opinion', async () => {
+    const opinion: OpinionEntity = {
+      id: '',
+      comment: faker.datatype.string(),
+      date: faker.date.past(),
+      score: faker.datatype.string(),
+      users: null,
+      commentators: null,
+    };
+
+    await expect(() => service.create(opinion)).rejects.toHaveProperty(
+      'message',
+      'Invalid typeScore of opinion',
+    );
+  });
+
   it('update should modify a opinion', async () => {
     const opinion: OpinionEntity = opinionsList[0];
     opinion.comment = faker.datatype.string();
     opinion.date = faker.date.past();
-    opinion.score = 'GOOD';
+    opinion.score = 'BAD';
     const updatedOpinion: OpinionEntity = await service.update(
       opinion.id,
       opinion,
@@ -112,12 +128,23 @@ describe('OpinionService', () => {
       ...opinion,
       comment: faker.datatype.string(),
       date: faker.date.past(),
-      score: 'GOOD',
+      score: 'BAD',
     };
     await expect(() => service.update('0', opinion)).rejects.toHaveProperty(
       'message',
       'The opinion with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid typeScore of opinion', async () => {
+    let opinion: OpinionEntity = opinionsList[0];
+    opinion = {
+      ...opinion,
+      score: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(opinion.id, opinion),
+    ).rejects.toHaveProperty('message', 'Invalid typeScore of opinion');
   });
 
   it('delete should remove a opinion', async () => {

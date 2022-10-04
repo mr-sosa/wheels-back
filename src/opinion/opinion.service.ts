@@ -7,6 +7,7 @@ import {
 } from '../shared/errors/business-errors';
 import { OpinionEntity } from './opinion.entity';
 
+const scores = ['EXCELLENT', 'VERYWELL', 'CORRECT', 'BAD', 'VERYBAD'];
 @Injectable()
 export class OpinionService {
   constructor(
@@ -35,6 +36,7 @@ export class OpinionService {
   }
 
   async create(opinion: OpinionEntity): Promise<OpinionEntity> {
+    await this.verifyEnumerations(opinion);
     return await this.opinionRepository.save(opinion);
   }
 
@@ -50,6 +52,7 @@ export class OpinionService {
         BusinessError.NOT_FOUND,
       );
 
+    await this.verifyEnumerations(opinion);
     return await this.opinionRepository.save({
       ...persistedOpinion,
       ...opinion,
@@ -68,5 +71,14 @@ export class OpinionService {
       );
 
     await this.opinionRepository.remove(opinion);
+  }
+
+  private async verifyEnumerations(opinion: OpinionEntity) {
+    if (!scores.includes(opinion.score)) {
+      throw new BusinessLogicException(
+        'Invalid typeScore of opinion',
+        BusinessError.BAD_REQUEST,
+      );
+    }
   }
 }
