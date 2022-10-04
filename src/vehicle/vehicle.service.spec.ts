@@ -41,7 +41,7 @@ describe('VehicleService', () => {
         color: faker.vehicle.color(),
         soatExpedition: faker.date.past(),
         soatExpiration: faker.date.future(),
-        type: faker.datatype.string(),
+        type: 'CAR',
         photo: faker.image.imageUrl(),
       });
       vehiclesList.push(vehicle);
@@ -86,7 +86,7 @@ describe('VehicleService', () => {
       color: faker.vehicle.color(),
       soatExpedition: faker.date.past(),
       soatExpiration: faker.date.future(),
-      type: faker.datatype.string(),
+      type: 'CAR',
       photo: faker.image.imageUrl(),
       user: null,
       driverTravels: null,
@@ -113,6 +113,27 @@ describe('VehicleService', () => {
     expect(vehicle.photo).toEqual(storedVehicle.photo);
   });
 
+  it('create should throw an exception for an invalid type of vehicle', async () => {
+    const vehicle: VehicleEntity = {
+      id: '',
+      licensePlate: faker.datatype.string(7),
+      brand: faker.vehicle.vehicle(),
+      serie: faker.vehicle.model(),
+      model: faker.date.past().getFullYear().toString(),
+      color: faker.vehicle.color(),
+      soatExpedition: faker.date.past(),
+      soatExpiration: faker.date.future(),
+      type: faker.datatype.string(),
+      photo: faker.image.imageUrl(),
+      user: null,
+      driverTravels: null,
+    };
+    await expect(() => service.create(vehicle)).rejects.toHaveProperty(
+      'message',
+      'Invalid type of vehicle',
+    );
+  });
+
   it('update should modify a vehicle', async () => {
     const vehicle: VehicleEntity = vehiclesList[0];
     vehicle.licensePlate = faker.datatype.string(7);
@@ -122,7 +143,7 @@ describe('VehicleService', () => {
     vehicle.color = faker.vehicle.color();
     vehicle.soatExpedition = faker.date.past();
     vehicle.soatExpiration = faker.date.future();
-    vehicle.type = faker.datatype.string();
+    vehicle.type = 'CAR';
     vehicle.photo = faker.image.imageUrl();
     const updatedVehicle: VehicleEntity = await service.update(
       vehicle.id,
@@ -158,13 +179,24 @@ describe('VehicleService', () => {
       color: faker.vehicle.color(),
       soatExpedition: faker.date.past(),
       soatExpiration: faker.date.future(),
-      type: faker.datatype.string(),
+      type: 'CAR',
       photo: faker.image.imageUrl(),
     };
     await expect(() => service.update('0', vehicle)).rejects.toHaveProperty(
       'message',
       'The vehicle with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid type of vehicle', async () => {
+    let vehicle: VehicleEntity = vehiclesList[0];
+    vehicle = {
+      ...vehicle,
+      type: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(vehicle.id, vehicle),
+    ).rejects.toHaveProperty('message', 'Invalid type of vehicle');
   });
 
   it('delete should remove a vehicle', async () => {

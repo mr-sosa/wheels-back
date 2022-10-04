@@ -9,6 +9,8 @@ import { VehicleEntity } from './vehicle.entity';
 
 @Injectable()
 export class VehicleService {
+  private type = ['CAR', 'ELECTRICCAR', 'MOTORCYCLE'];
+
   constructor(
     @InjectRepository(VehicleEntity)
     private readonly vehicleRepository: Repository<VehicleEntity>,
@@ -35,6 +37,7 @@ export class VehicleService {
   }
 
   async create(vehicle: VehicleEntity): Promise<VehicleEntity> {
+    await this.verifyEnumerations(vehicle);
     return await this.vehicleRepository.save(vehicle);
   }
 
@@ -50,6 +53,7 @@ export class VehicleService {
         BusinessError.NOT_FOUND,
       );
 
+    await this.verifyEnumerations(vehicle);
     return await this.vehicleRepository.save({
       ...persistedVehicle,
       ...vehicle,
@@ -68,5 +72,14 @@ export class VehicleService {
       );
 
     await this.vehicleRepository.remove(vehicle);
+  }
+
+  private async verifyEnumerations(vehicle: VehicleEntity) {
+    if (!this.type.includes(vehicle.type)) {
+      throw new BusinessLogicException(
+        'Invalid type of vehicle',
+        BusinessError.BAD_REQUEST,
+      );
+    }
   }
 }

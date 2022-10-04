@@ -11,16 +11,16 @@ export class VehicleEntity {
   licensePlate: string;
 
   @Column()
-  brand: String;
+  brand: string;
 
   @Column()
-  serie: String;
+  serie: string;
 
   @Column()
-  model: String;
+  model: string;
 
   @Column()
-  color: String;
+  color: string;
 
   @Column()
   soatExpedition: Date;
@@ -29,10 +29,10 @@ export class VehicleEntity {
   soatExpiration: Date;
 
   @Column()
-  type: String;
+  type: string;
 
   @Column()
-  photo: String;
+  photo: string;
 
   /*
   User
