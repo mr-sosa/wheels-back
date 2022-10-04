@@ -7,12 +7,10 @@ import {
 } from '../shared/errors/business-errors';
 import { UserEntity } from './user.entity';
 
+const state = ['ACTIVE', 'INACTIVE'];
+const genre = ['MALE', 'FEMALE', 'OTHER'];
 @Injectable()
 export class UserService {
-  private state = ['ACTIVE', 'INACTIVE'];
-
-  private genre = ['MALE', 'FEMALE', 'OTHER'];
-
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
@@ -57,7 +55,7 @@ export class UserService {
   }
 
   async create(user: UserEntity): Promise<UserEntity> {
-    await this.verifyEnumerationsOfUser(user);
+    await this.verifyEnumerations(user);
     return await this.userRepository.save(user);
   }
 
@@ -80,7 +78,7 @@ export class UserService {
         'The user with the given id was not found',
         BusinessError.NOT_FOUND,
       );
-    await this.verifyEnumerationsOfUser(user);
+    await this.verifyEnumerations(user);
     return await this.userRepository.save({
       ...persistedUser,
       ...user,
@@ -110,14 +108,14 @@ export class UserService {
     await this.userRepository.remove(user);
   }
 
-  private async verifyEnumerationsOfUser(user: UserEntity) {
-    if (!this.state.includes(user.state)) {
+  private async verifyEnumerations(user: UserEntity) {
+    if (!state.includes(user.state)) {
       throw new BusinessLogicException(
         'Invalid state of user',
         BusinessError.BAD_REQUEST,
       );
     }
-    if (!this.genre.includes(user.genre)) {
+    if (!genre.includes(user.genre)) {
       throw new BusinessLogicException(
         'Invalid genre of user',
         BusinessError.BAD_REQUEST,
