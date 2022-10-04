@@ -36,7 +36,7 @@ describe('DriverTravelService', () => {
       const driverTravel: DriverTravelEntity = await repository.save({
         date: faker.date.soon(),
         spaceAvailable: faker.datatype.number(6),
-        state: faker.datatype.string(),
+        state: 'OPEN',
       });
       driverTravelsList.push(driverTravel);
     }
@@ -73,7 +73,7 @@ describe('DriverTravelService', () => {
       id: '',
       date: faker.date.soon(),
       spaceAvailable: faker.datatype.number(6),
-      state: faker.datatype.string(),
+      state: 'OPEN',
       passengerTravels: null,
       vehicle: null,
       routes: null,
@@ -103,11 +103,33 @@ describe('DriverTravelService', () => {
     );
   });
 
+  it('update should throw an exception for an invalid state of passengerTravel', async () => {
+    const driverTravel: DriverTravelEntity = {
+      id: '',
+      date: faker.date.soon(),
+      spaceAvailable: faker.datatype.number(6),
+      state: faker.datatype.string(),
+      passengerTravels: null,
+      vehicle: null,
+      routes: null,
+      driver: null,
+      passengers: null,
+      preferences: null,
+      origin: null,
+      destination: null,
+    };
+
+    await expect(() => service.create(driverTravel)).rejects.toHaveProperty(
+      'message',
+      'Invalid state of driverTravel',
+    );
+  });
+
   it('update should modify a driverTravel', async () => {
     const driverTravel: DriverTravelEntity = driverTravelsList[0];
     driverTravel.date = faker.date.soon();
     driverTravel.spaceAvailable = faker.datatype.number(6);
-    driverTravel.state = faker.datatype.string();
+    driverTravel.state = 'OPEN';
     const updatedDriverTravel: DriverTravelEntity = await service.update(
       driverTravel.id,
       driverTravel,
@@ -133,7 +155,7 @@ describe('DriverTravelService', () => {
       ...driverTravel,
       date: faker.date.soon(),
       spaceAvailable: faker.datatype.number(6),
-      state: faker.datatype.string(),
+      state: 'OPEN',
     };
     await expect(() =>
       service.update('0', driverTravel),
@@ -141,6 +163,17 @@ describe('DriverTravelService', () => {
       'message',
       'The driverTravel with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid state of passengerTravel', async () => {
+    let driverTravel: DriverTravelEntity = driverTravelsList[0];
+    driverTravel = {
+      ...driverTravel,
+      state: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(driverTravel.id, driverTravel),
+    ).rejects.toHaveProperty('message', 'Invalid state of driverTravel');
   });
 
   it('delete should remove a driverTravel', async () => {

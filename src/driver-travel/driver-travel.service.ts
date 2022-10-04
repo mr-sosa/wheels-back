@@ -7,6 +7,7 @@ import {
 } from '../shared/errors/business-errors';
 import { DriverTravelEntity } from './driver-travel.entity';
 
+const state = ['OPEN', 'FULL', 'INPROGRESS', 'FINISHED', 'CANCELLED'];
 @Injectable()
 export class DriverTravelService {
   constructor(
@@ -54,6 +55,7 @@ export class DriverTravelService {
   }
 
   async create(driverTravel: DriverTravelEntity): Promise<DriverTravelEntity> {
+    await this.verifyEnumerations(driverTravel);
     return await this.driverTravelRepository.save(driverTravel);
   }
 
@@ -81,6 +83,7 @@ export class DriverTravelService {
         BusinessError.NOT_FOUND,
       );
 
+    await this.verifyEnumerations(driverTravel);
     return await this.driverTravelRepository.save({
       ...persistedDriverTravel,
       ...driverTravel,
@@ -109,5 +112,14 @@ export class DriverTravelService {
       );
 
     await this.driverTravelRepository.remove(driverTravel);
+  }
+
+  private async verifyEnumerations(driverTravel: DriverTravelEntity) {
+    if (!state.includes(driverTravel.state)) {
+      throw new BusinessLogicException(
+        'Invalid state of driverTravel',
+        BusinessError.BAD_REQUEST,
+      );
+    }
   }
 }
