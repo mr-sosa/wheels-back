@@ -121,6 +121,8 @@ describe('UserService', () => {
       vehicles: null,
       driverTravelByPassenger: null,
       driverTravelsByDriver: null,
+      opinionsMade: null,
+      opinionsReceived: null,
     };
 
     const newUser: UserEntity = await service.create(user);

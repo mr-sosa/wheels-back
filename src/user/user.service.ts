@@ -23,6 +23,8 @@ export class UserService {
         'vehicles',
         'driverTravelsByDriver',
         'driverTravelByPassenger',
+        'opinionsReceived',
+        'opinionsMade',
       ],
     });
   }
@@ -37,6 +39,8 @@ export class UserService {
         'vehicles',
         'driverTravelsByDriver',
         'driverTravelByPassenger',
+        'opinionsReceived',
+        'opinionsMade',
       ],
     });
     if (!user)
@@ -62,6 +66,8 @@ export class UserService {
         'vehicles',
         'driverTravelsByDriver',
         'driverTravelByPassenger',
+        'opinionsReceived',
+        'opinionsMade',
       ],
     });
     if (!persistedUser)
@@ -86,6 +92,8 @@ export class UserService {
         'vehicles',
         'driverTravelsByDriver',
         'driverTravelByPassenger',
+        'opinionsReceived',
+        'opinionsMade',
       ],
     });
     if (!user)
