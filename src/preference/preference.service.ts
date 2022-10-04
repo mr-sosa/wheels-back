@@ -7,6 +7,18 @@ import {
 } from '../shared/errors/business-errors';
 import { PreferenceEntity } from './preference.entity';
 
+const type = [
+  'LIKEDOGS',
+  'NOLIKEDOGS',
+  'LIKESPEAK',
+  'NOLIKESPEAK',
+  'LIKESMOKE',
+  'NOLIKESMOKE',
+  'LIKEMUSIC',
+  'TWOPERSONBACK',
+  'FASTACEPTATION',
+  'VERIFIEDPROFILE',
+];
 @Injectable()
 export class PreferenceService {
   constructor(
@@ -36,6 +48,7 @@ export class PreferenceService {
   }
 
   async create(preference: PreferenceEntity): Promise<PreferenceEntity> {
+    await this.verifyEnumerations(preference);
     return await this.preferenceRepository.save(preference);
   }
 
@@ -54,6 +67,7 @@ export class PreferenceService {
         BusinessError.NOT_FOUND,
       );
 
+    await this.verifyEnumerations(preference);
     return await this.preferenceRepository.save({
       ...persistedPreference,
       ...preference,
@@ -73,5 +87,14 @@ export class PreferenceService {
       );
 
     await this.preferenceRepository.remove(preference);
+  }
+
+  private async verifyEnumerations(preference: PreferenceEntity) {
+    if (!type.includes(preference.type)) {
+      throw new BusinessLogicException(
+        'Invalid type of preference',
+        BusinessError.BAD_REQUEST,
+      );
+    }
   }
 }

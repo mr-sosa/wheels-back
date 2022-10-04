@@ -34,7 +34,7 @@ describe('PreferenceService', () => {
     preferencesList = [];
     for (let i = 0; i < 5; i++) {
       const preference: PreferenceEntity = await repository.save({
-        type: faker.datatype.string(5),
+        type: 'LIKEMUSIC',
       });
       preferencesList.push(preference);
     }
@@ -65,7 +65,7 @@ describe('PreferenceService', () => {
   it('create should return a new preference', async () => {
     const preference: PreferenceEntity = {
       id: '',
-      type: faker.datatype.string(5),
+      type: 'LIKEMUSIC',
       users: null,
       driverTravels: null,
     };
@@ -80,9 +80,23 @@ describe('PreferenceService', () => {
     expect(preference.type).toEqual(storedPreference.type);
   });
 
+  it('create should throw an exception for an invalid type of preference', async () => {
+    const preference: PreferenceEntity = {
+      id: '',
+      type: faker.datatype.string(5),
+      users: null,
+      driverTravels: null,
+    };
+
+    await expect(() => service.create(preference)).rejects.toHaveProperty(
+      'message',
+      'Invalid type of preference',
+    );
+  });
+
   it('update should modify a preference', async () => {
     const preference: PreferenceEntity = preferencesList[0];
-    preference.type = faker.datatype.string(5);
+    preference.type = 'LIKEMUSIC';
     const updatedPreference: PreferenceEntity = await service.update(
       preference.id,
       preference,
@@ -99,12 +113,23 @@ describe('PreferenceService', () => {
     let preference: PreferenceEntity = preferencesList[0];
     preference = {
       ...preference,
-      type: faker.datatype.string(5),
+      type: 'LIKEMUSIC',
     };
     await expect(() => service.update('0', preference)).rejects.toHaveProperty(
       'message',
       'The preference with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid type of preference', async () => {
+    let preference: PreferenceEntity = preferencesList[0];
+    preference = {
+      ...preference,
+      type: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(preference.id, preference),
+    ).rejects.toHaveProperty('message', 'Invalid type of preference');
   });
 
   it('delete should remove a preference', async () => {
