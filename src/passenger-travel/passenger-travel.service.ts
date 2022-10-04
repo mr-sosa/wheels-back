@@ -7,6 +7,7 @@ import {
 } from '../shared/errors/business-errors';
 import { PassengerTravelEntity } from './passenger-travel.entity';
 
+const state = ['OPEN', 'ACCEPTED', 'INPROGRESS', 'FINISHED', 'CANCELLED'];
 @Injectable()
 export class PassengerTravelService {
   constructor(
@@ -38,6 +39,7 @@ export class PassengerTravelService {
   async create(
     passengerTravel: PassengerTravelEntity,
   ): Promise<PassengerTravelEntity> {
+    await this.verifyEnumerations(passengerTravel);
     return await this.passengerTravelRepository.save(passengerTravel);
   }
 
@@ -56,6 +58,7 @@ export class PassengerTravelService {
         BusinessError.NOT_FOUND,
       );
 
+    await this.verifyEnumerations(passengerTravel);
     return await this.passengerTravelRepository.save({
       ...persistedPassengerTravel,
       ...passengerTravel,
@@ -75,5 +78,14 @@ export class PassengerTravelService {
       );
 
     await this.passengerTravelRepository.remove(passengerTravel);
+  }
+
+  private async verifyEnumerations(passengerTravel: PassengerTravelEntity) {
+    if (!state.includes(passengerTravel.state)) {
+      throw new BusinessLogicException(
+        'Invalid state of passengerTravel',
+        BusinessError.BAD_REQUEST,
+      );
+    }
   }
 }

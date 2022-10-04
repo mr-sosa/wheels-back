@@ -37,7 +37,7 @@ describe('PassengerTravelService', () => {
         cost: faker.datatype.number(50000),
         quota: faker.datatype.number(6),
         date: faker.date.soon(),
-        state: faker.datatype.string(),
+        state: 'OPEN',
       });
       passengerTravelsList.push(passengerTravel);
     }
@@ -75,7 +75,7 @@ describe('PassengerTravelService', () => {
       cost: faker.datatype.number(50000),
       quota: faker.datatype.number(6),
       date: faker.date.soon(),
-      state: faker.datatype.string(),
+      state: 'OPEN',
       driverTravel: null,
       passengers: null,
       origin: null,
@@ -102,12 +102,31 @@ describe('PassengerTravelService', () => {
     expect(passengerTravel.state).toEqual(storedPassengerTravel.state);
   });
 
+  it('create should throw an exception for an invalid state of passengerTravel', async () => {
+    const passengerTravel: PassengerTravelEntity = {
+      id: '',
+      cost: faker.datatype.number(50000),
+      quota: faker.datatype.number(6),
+      date: faker.date.soon(),
+      state: faker.datatype.string(),
+      driverTravel: null,
+      passengers: null,
+      origin: null,
+      destination: null,
+    };
+
+    await expect(() => service.create(passengerTravel)).rejects.toHaveProperty(
+      'message',
+      'Invalid state of passengerTravel',
+    );
+  });
+
   it('update should modify a passengerTravel', async () => {
     const passengerTravel: PassengerTravelEntity = passengerTravelsList[0];
     passengerTravel.cost = faker.datatype.number(50000);
     passengerTravel.quota = faker.datatype.number(6);
     passengerTravel.date = faker.date.soon();
-    passengerTravel.state = faker.datatype.string();
+    passengerTravel.state = 'OPEN';
     const updatedPassengerTravel: PassengerTravelEntity = await service.update(
       passengerTravel.id,
       passengerTravel,
@@ -135,7 +154,7 @@ describe('PassengerTravelService', () => {
       cost: faker.datatype.number(50000),
       quota: faker.datatype.number(6),
       date: faker.date.soon(),
-      state: faker.datatype.string(),
+      state: 'OPEN',
     };
     await expect(() =>
       service.update('0', passengerTravel),
@@ -143,6 +162,17 @@ describe('PassengerTravelService', () => {
       'message',
       'The passengerTravel with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid state of passengerTravel', async () => {
+    let passengerTravel: PassengerTravelEntity = passengerTravelsList[0];
+    passengerTravel = {
+      ...passengerTravel,
+      state: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(passengerTravel.id, passengerTravel),
+    ).rejects.toHaveProperty('message', 'Invalid state of passengerTravel');
   });
 
   it('delete should remove a passengerTravel', async () => {
