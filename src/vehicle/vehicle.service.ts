@@ -7,10 +7,9 @@ import {
 } from '../shared/errors/business-errors';
 import { VehicleEntity } from './vehicle.entity';
 
+const type = ['CAR', 'ELECTRICCAR', 'MOTORCYCLE'];
 @Injectable()
 export class VehicleService {
-  private type = ['CAR', 'ELECTRICCAR', 'MOTORCYCLE'];
-
   constructor(
     @InjectRepository(VehicleEntity)
     private readonly vehicleRepository: Repository<VehicleEntity>,
@@ -75,7 +74,7 @@ export class VehicleService {
   }
 
   private async verifyEnumerations(vehicle: VehicleEntity) {
-    if (!this.type.includes(vehicle.type)) {
+    if (!type.includes(vehicle.type)) {
       throw new BusinessLogicException(
         'Invalid type of vehicle',
         BusinessError.BAD_REQUEST,
