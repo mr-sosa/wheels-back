@@ -23,10 +23,10 @@ export class DriverTravelEntity {
   date: Date;
 
   @Column()
-  spaceAvailable: Number;
+  spaceAvailable: number;
 
   @Column()
-  state: String;
+  state: string;
 
   /*
   Preference

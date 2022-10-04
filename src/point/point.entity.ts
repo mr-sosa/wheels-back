@@ -8,10 +8,10 @@ export class PointEntity {
   id: string;
 
   @Column()
-  latitude: String;
+  latitude: string;
 
   @Column()
-  longitude: String;
+  longitude: string;
 
   /*
   Step

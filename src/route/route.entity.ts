@@ -14,10 +14,10 @@ export class RouteEntity {
   id: string;
 
   @Column()
-  duration: Number;
+  duration: number;
 
   @Column()
-  distance: Number;
+  distance: number;
 
   /*
   DriverTravel

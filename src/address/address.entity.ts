@@ -18,46 +18,46 @@ export class AddressEntity {
   id: string;
 
   @Column()
-  country: String;
+  country: string;
 
   @Column()
-  department: String;
+  department: string;
 
   @Column()
-  city: String;
+  city: string;
 
   @Column()
-  location: String;
+  location: string;
 
   @Column()
-  name: String;
+  name: string;
 
   @Column()
-  mainRoad: String;
+  mainRoad: string;
 
   @Column()
-  firstNumber: Number;
+  firstNumber: number;
 
   @Column()
-  firstLetter: String;
+  firstLetter: string;
 
   @Column()
-  fisrtQuadrant: String;
+  fisrtQuadrant: string;
 
   @Column()
-  secondNumber: Number;
+  secondNumber: number;
 
   @Column()
-  secondLetter: String;
+  secondLetter: string;
 
   @Column()
-  secondQuadrant: String;
+  secondQuadrant: string;
 
   @Column()
-  plateNumber: Number;
+  plateNumber: number;
 
   @Column()
-  description: String;
+  description: string;
 
   /*
   User

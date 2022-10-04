@@ -15,10 +15,10 @@ export class PassengerTravelEntity {
   id: string;
 
   @Column()
-  cost: Number;
+  cost: number;
 
   @Column()
-  quota: Number;
+  quota: number;
 
   @Column()
   date: Date;

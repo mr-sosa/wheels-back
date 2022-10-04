@@ -8,7 +8,7 @@ export class PreferenceEntity {
   id: string;
 
   @Column()
-  type: String;
+  type: string;
 
   /*
   User
