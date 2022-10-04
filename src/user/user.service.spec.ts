@@ -38,7 +38,7 @@ describe('UserService', () => {
         password: faker.internet.password(),
         name: faker.name.fullName(),
         phone: faker.phone.number(),
-        genre: faker.datatype.string(),
+        genre: 'MALE',
         birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
         photo: faker.image.imageUrl(),
         idenficiationCard: faker.image.imageUrl(),
@@ -46,7 +46,7 @@ describe('UserService', () => {
         score: faker.datatype.number({ min: 1, max: 5 }),
         drivingPass: faker.image.imageUrl(),
         isDriver: faker.datatype.boolean(),
-        state: faker.datatype.string(),
+        state: 'ACTIVE',
         verifiedMail: faker.datatype.boolean(),
         verifiedPhone: faker.datatype.boolean(),
         verifiedIC: faker.datatype.boolean(),
@@ -101,7 +101,7 @@ describe('UserService', () => {
       password: faker.internet.password(),
       name: faker.name.fullName(),
       phone: faker.phone.number(),
-      genre: faker.datatype.string(),
+      genre: 'FEMALE',
       birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
       photo: faker.image.imageUrl(),
       idenficiationCard: faker.image.imageUrl(),
@@ -109,7 +109,7 @@ describe('UserService', () => {
       score: faker.datatype.number({ min: 1, max: 5 }),
       drivingPass: faker.image.imageUrl(),
       isDriver: faker.datatype.boolean(),
-      state: faker.datatype.string(),
+      state: 'ACTIVE',
       verifiedMail: faker.datatype.boolean(),
       verifiedPhone: faker.datatype.boolean(),
       verifiedIC: faker.datatype.boolean(),
@@ -154,12 +154,87 @@ describe('UserService', () => {
     expect(user.verifiedUser).toEqual(storedUser.verifiedUser);
   });
 
+  it('create should throw an exception for invalid state of a new user', async () => {
+    const user: UserEntity = {
+      id: '',
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      name: faker.name.fullName(),
+      phone: faker.phone.number(),
+      genre: 'FEMALE',
+      birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
+      photo: faker.image.imageUrl(),
+      idenficiationCard: faker.image.imageUrl(),
+      about: faker.datatype.string(),
+      score: faker.datatype.number({ min: 1, max: 5 }),
+      drivingPass: faker.image.imageUrl(),
+      isDriver: faker.datatype.boolean(),
+      state: faker.datatype.string(),
+      verifiedMail: faker.datatype.boolean(),
+      verifiedPhone: faker.datatype.boolean(),
+      verifiedIC: faker.datatype.boolean(),
+      verifiedDrivingPass: faker.datatype.boolean(),
+      verifiedUser: false,
+      addresses: null,
+      preferences: null,
+      passengerTravels: null,
+      vehicles: null,
+      driverTravelByPassenger: null,
+      driverTravelsByDriver: null,
+      opinionsMade: null,
+      opinionsReceived: null,
+    };
+
+    await expect(() => service.create(user)).rejects.toHaveProperty(
+      'message',
+      'Invalid state of user',
+    );
+  });
+
+  it('create should throw an exception for invalid genre of a new user', async () => {
+    const user: UserEntity = {
+      id: '',
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      name: faker.name.fullName(),
+      phone: faker.phone.number(),
+      genre: faker.datatype.string(),
+      birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
+      photo: faker.image.imageUrl(),
+      idenficiationCard: faker.image.imageUrl(),
+      about: faker.datatype.string(),
+      score: faker.datatype.number({ min: 1, max: 5 }),
+      drivingPass: faker.image.imageUrl(),
+      isDriver: faker.datatype.boolean(),
+      state: 'ACTIVE',
+      verifiedMail: faker.datatype.boolean(),
+      verifiedPhone: faker.datatype.boolean(),
+      verifiedIC: faker.datatype.boolean(),
+      verifiedDrivingPass: faker.datatype.boolean(),
+      verifiedUser: false,
+      addresses: null,
+      preferences: null,
+      passengerTravels: null,
+      vehicles: null,
+      driverTravelByPassenger: null,
+      driverTravelsByDriver: null,
+      opinionsMade: null,
+      opinionsReceived: null,
+    };
+
+    await expect(() => service.create(user)).rejects.toHaveProperty(
+      'message',
+      'Invalid genre of user',
+    );
+  });
+
   it('update should modify a user', async () => {
     const user: UserEntity = usersList[0];
-    email: faker.internet.email(), (user.password = faker.internet.password());
+    user.email = faker.internet.email();
+    user.password = faker.internet.password();
     user.name = faker.name.fullName();
     user.phone = faker.phone.number();
-    user.genre = faker.datatype.string();
+    user.genre = 'MALE';
     user.birthDate = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
     user.photo = faker.image.imageUrl();
     user.idenficiationCard = faker.image.imageUrl();
@@ -167,7 +242,7 @@ describe('UserService', () => {
     user.score = faker.datatype.number({ min: 1, max: 5 });
     user.drivingPass = faker.image.imageUrl();
     user.isDriver = faker.datatype.boolean();
-    user.state = faker.datatype.string();
+    user.state = 'ACTIVE';
     user.verifiedMail = faker.datatype.boolean();
     user.verifiedPhone = faker.datatype.boolean();
     user.verifiedIC = faker.datatype.boolean();
@@ -209,7 +284,7 @@ describe('UserService', () => {
       password: faker.internet.password(),
       name: faker.name.fullName(),
       phone: faker.phone.number(),
-      genre: faker.datatype.string(),
+      genre: 'MALE',
       birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
       photo: faker.image.imageUrl(),
       idenficiationCard: faker.image.imageUrl(),
@@ -217,7 +292,7 @@ describe('UserService', () => {
       score: faker.datatype.number({ min: 1, max: 5 }),
       drivingPass: faker.image.imageUrl(),
       isDriver: faker.datatype.boolean(),
-      state: faker.datatype.string(),
+      state: 'ACTIVE',
       verifiedMail: faker.datatype.boolean(),
       verifiedPhone: faker.datatype.boolean(),
       verifiedIC: faker.datatype.boolean(),
@@ -227,6 +302,30 @@ describe('UserService', () => {
     await expect(() => service.update('0', user)).rejects.toHaveProperty(
       'message',
       'The user with the given id was not found',
+    );
+  });
+
+  it('update should throw an exception for an invalid state of user', async () => {
+    let user: UserEntity = usersList[0];
+    user = {
+      ...user,
+      state: faker.datatype.string(),
+    };
+    await expect(() => service.update(user.id, user)).rejects.toHaveProperty(
+      'message',
+      'Invalid state of user',
+    );
+  });
+
+  it('update should throw an exception for an invalid genre of user', async () => {
+    let user: UserEntity = usersList[0];
+    user = {
+      ...user,
+      genre: faker.datatype.string(),
+    };
+    await expect(() => service.update(user.id, user)).rejects.toHaveProperty(
+      'message',
+      'Invalid genre of user',
     );
   });
 

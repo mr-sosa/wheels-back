@@ -20,28 +20,28 @@ export class UserEntity {
   id: string;
 
   @Column()
-  email: String;
+  email: string;
 
   @Column()
-  password: String;
+  password: string;
 
   @Column()
-  name: String;
+  name: string;
 
   @Column()
-  phone: String;
+  phone: string;
 
   @Column()
-  genre: String;
+  genre: string;
 
   @Column()
   birthDate: Date;
 
   @Column()
-  photo: String;
+  photo: string;
 
   @Column()
-  idenficiationCard: String;
+  idenficiationCard: string;
 
   @Column()
   about: String;
@@ -50,13 +50,13 @@ export class UserEntity {
   score: Number;
 
   @Column()
-  drivingPass: String;
+  drivingPass: string;
 
   @Column()
   isDriver: Boolean;
 
   @Column()
-  state: String;
+  state: string;
 
   @Column()
   verifiedMail: Boolean;
@@ -71,7 +71,7 @@ export class UserEntity {
   verifiedDrivingPass: Boolean;
 
   @Column()
-  verifiedUser: Boolean;
+  verifiedUser: boolean;
 
   /*
   Address
