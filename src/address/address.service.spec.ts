@@ -39,13 +39,13 @@ describe('AddressService', () => {
         city: faker.address.cityName(),
         location: faker.datatype.string(),
         name: faker.datatype.string(),
-        mainRoad: faker.datatype.string(),
+        mainRoad: 'STREET',
         firstNumber: faker.datatype.number({ min: 1 }),
         firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
-        fisrtQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+        fisrtQuadrant: '',
         secondNumber: faker.datatype.number({ min: 1 }),
         secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
-        secondQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+        secondQuadrant: '',
         plateNumber: parseInt(faker.address.buildingNumber()),
         description: faker.datatype.string(),
       });
@@ -94,13 +94,13 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
-      mainRoad: faker.datatype.string(),
+      mainRoad: 'STREET',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
-      fisrtQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+      fisrtQuadrant: '',
       secondNumber: faker.datatype.number({ min: 1 }),
       secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
-      secondQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+      secondQuadrant: '',
       plateNumber: parseInt(faker.address.buildingNumber()),
       description: faker.datatype.string(),
       users: null,
@@ -137,6 +137,99 @@ describe('AddressService', () => {
     expect(address.description).toEqual(storedAddress.description);
   });
 
+  it('create should throw an exception for an invalid mainRoad of address', async () => {
+    const address: AddressEntity = {
+      id: '',
+      country: faker.address.country(),
+      department: faker.address.state(),
+      city: faker.address.cityName(),
+      location: faker.datatype.string(),
+      name: faker.datatype.string(),
+      mainRoad: faker.datatype.string(),
+      firstNumber: faker.datatype.number({ min: 1 }),
+      firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      fisrtQuadrant: '',
+      secondNumber: faker.datatype.number({ min: 1 }),
+      secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      secondQuadrant: '',
+      plateNumber: parseInt(faker.address.buildingNumber()),
+      description: faker.datatype.string(),
+      users: null,
+      originPassengerTravels: null,
+      destinationPassengerTravels: null,
+      originDriverTravels: null,
+      destinationDriverTravels: null,
+      point: null,
+    };
+
+    await expect(() => service.create(address)).rejects.toHaveProperty(
+      'message',
+      'Invalid mainRoad of address',
+    );
+  });
+
+  it('create should throw an exception for an invalid fisrtQuadrant of address', async () => {
+    const address: AddressEntity = {
+      id: '',
+      country: faker.address.country(),
+      department: faker.address.state(),
+      city: faker.address.cityName(),
+      location: faker.datatype.string(),
+      name: faker.datatype.string(),
+      mainRoad: 'ROAD',
+      firstNumber: faker.datatype.number({ min: 1 }),
+      firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      fisrtQuadrant: faker.datatype.string(),
+      secondNumber: faker.datatype.number({ min: 1 }),
+      secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      secondQuadrant: 'BIS',
+      plateNumber: parseInt(faker.address.buildingNumber()),
+      description: faker.datatype.string(),
+      users: null,
+      originPassengerTravels: null,
+      destinationPassengerTravels: null,
+      originDriverTravels: null,
+      destinationDriverTravels: null,
+      point: null,
+    };
+
+    await expect(() => service.create(address)).rejects.toHaveProperty(
+      'message',
+      'Invalid fisrtQuadrant of address',
+    );
+  });
+
+  it('create should throw an exception for an invalid secondQuadrant of address', async () => {
+    const address: AddressEntity = {
+      id: '',
+      country: faker.address.country(),
+      department: faker.address.state(),
+      city: faker.address.cityName(),
+      location: faker.datatype.string(),
+      name: faker.datatype.string(),
+      mainRoad: 'WAY',
+      firstNumber: faker.datatype.number({ min: 1 }),
+      firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      fisrtQuadrant: 'BIS',
+      secondNumber: faker.datatype.number({ min: 1 }),
+      secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
+      secondQuadrant: faker.datatype.string(),
+      plateNumber: parseInt(faker.address.buildingNumber()),
+      description: faker.datatype.string(),
+      users: null,
+      originPassengerTravels: null,
+      destinationPassengerTravels: null,
+      originDriverTravels: null,
+      destinationDriverTravels: null,
+      point: null,
+    };
+
+    await expect(() => service.create(address)).rejects.toHaveProperty(
+      'message',
+      'Invalid secondQuadrant of address',
+    );
+  });
+
   it('update should modify a address', async () => {
     const address: AddressEntity = addresssList[0];
     address.country = faker.address.country();
@@ -144,17 +237,13 @@ describe('AddressService', () => {
     address.city = faker.address.cityName();
     address.location = faker.datatype.string();
     address.name = faker.datatype.string();
-    address.mainRoad = faker.datatype.string();
+    address.mainRoad = 'STREET';
     address.firstNumber = faker.datatype.number({ min: 1 });
     address.firstLetter = faker.datatype.string(1).toLocaleUpperCase();
-    address.fisrtQuadrant = faker.address
-      .cardinalDirection()
-      .toLocaleUpperCase();
+    address.fisrtQuadrant = '';
     address.secondNumber = faker.datatype.number({ min: 1 });
     address.secondLetter = faker.datatype.string(1).toLocaleUpperCase();
-    address.secondQuadrant = faker.address
-      .cardinalDirection()
-      .toLocaleUpperCase();
+    address.secondQuadrant = '';
     address.plateNumber = parseInt(faker.address.buildingNumber());
     address.description = faker.datatype.string();
     const updatedAddress: AddressEntity = await service.update(
@@ -194,13 +283,13 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
-      mainRoad: faker.datatype.string(),
+      mainRoad: 'ROAD',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
-      fisrtQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+      fisrtQuadrant: '',
       secondNumber: faker.datatype.number({ min: 1 }),
       secondLetter: faker.datatype.string(1).toLocaleUpperCase(),
-      secondQuadrant: faker.address.cardinalDirection().toLocaleUpperCase(),
+      secondQuadrant: '',
       plateNumber: parseInt(faker.address.buildingNumber()),
       description: faker.datatype.string(),
     };
@@ -208,6 +297,39 @@ describe('AddressService', () => {
       'message',
       'The address with the given id was not found',
     );
+  });
+
+  it('update should throw an exception for an invalid mainRoad of address', async () => {
+    let address: AddressEntity = addresssList[0];
+    address = {
+      ...address,
+      mainRoad: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(address.id, address),
+    ).rejects.toHaveProperty('message', 'Invalid mainRoad of address');
+  });
+
+  it('update should throw an exception for an invalid fisrtQuadrant of address', async () => {
+    let address: AddressEntity = addresssList[0];
+    address = {
+      ...address,
+      fisrtQuadrant: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(address.id, address),
+    ).rejects.toHaveProperty('message', 'Invalid fisrtQuadrant of address');
+  });
+
+  it('update should throw an exception for an invalid secondQuadrant of address', async () => {
+    let address: AddressEntity = addresssList[0];
+    address = {
+      ...address,
+      secondQuadrant: faker.datatype.string(),
+    };
+    await expect(() =>
+      service.update(address.id, address),
+    ).rejects.toHaveProperty('message', 'Invalid secondQuadrant of address');
   });
 
   it('delete should remove a address', async () => {
