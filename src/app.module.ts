@@ -25,6 +25,7 @@ import { VehicleEntity } from './vehicle/vehicle.entity';
 import { UserVehicleModule } from './user-vehicle/user-vehicle.module';
 import { UserPreferenceModule } from './user-preference/user-preference.module';
 import { UserOpinionMadeModule } from './user-opinion-made/user-opinion-made.module';
+import { UserOpinionReceivedModule } from './user-opinion-received/user-opinion-received.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { UserOpinionMadeModule } from './user-opinion-made/user-opinion-made.mod
     UserVehicleModule,
     UserPreferenceModule,
     UserOpinionMadeModule,
+    UserOpinionReceivedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
