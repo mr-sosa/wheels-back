@@ -50,37 +50,7 @@ export class UserPreferenceService {
     userId: string,
     preferenceId: string,
   ): Promise<PreferenceEntity> {
-    const preference: PreferenceEntity =
-      await this.preferenceRepository.findOne({
-        where: { id: preferenceId },
-      });
-    if (!preference)
-      throw new BusinessLogicException(
-        'The preference with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const user: UserEntity = await this.userRepository.findOne({
-      where: { id: userId },
-      relations: ['preferences'],
-    });
-    if (!user)
-      throw new BusinessLogicException(
-        'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const userPreference: PreferenceEntity = user.preferences.find(
-      (e) => e.id === preference.id,
-    );
-
-    if (!userPreference)
-      throw new BusinessLogicException(
-        'The preference with the given id is not associated to the user',
-        BusinessError.PRECONDITION_FAILED,
-      );
-
-    return userPreference;
+    return await this.validate(userId, preferenceId);
   }
 
   async findPreferencesByUserId(userId: string): Promise<PreferenceEntity[]> {
@@ -129,6 +99,18 @@ export class UserPreferenceService {
   }
 
   async deletePreferenceUser(userId: string, preferenceId: string) {
+    await this.validate(userId, preferenceId);
+
+    const user: UserEntity = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['preferences'],
+    });
+
+    user.preferences = user.preferences.filter((e) => e.id !== preferenceId);
+    await this.userRepository.save(user);
+  }
+
+  async validate(userId: string, preferenceId: string) {
     const preference: PreferenceEntity =
       await this.preferenceRepository.findOne({
         where: { id: preferenceId },
@@ -159,7 +141,6 @@ export class UserPreferenceService {
         BusinessError.PRECONDITION_FAILED,
       );
 
-    user.preferences = user.preferences.filter((e) => e.id !== preferenceId);
-    await this.userRepository.save(user);
+    return userPreference;
   }
 }

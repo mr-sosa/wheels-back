@@ -53,22 +53,22 @@ export class UserEntity {
   drivingPass: string;
 
   @Column()
-  isDriver: Boolean;
+  isDriver: boolean;
 
   @Column()
   state: string;
 
   @Column()
-  verifiedMail: Boolean;
+  verifiedMail: boolean;
 
   @Column()
-  verifiedPhone: Boolean;
+  verifiedPhone: boolean;
 
   @Column()
-  verifiedIC: Boolean;
+  verifiedIC: boolean;
 
   @Column()
-  verifiedDrivingPass: Boolean;
+  verifiedDrivingPass: boolean;
 
   @Column()
   verifiedUser: boolean;

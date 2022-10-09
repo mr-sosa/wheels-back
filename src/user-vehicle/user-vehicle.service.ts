@@ -51,36 +51,7 @@ export class UserVehicleService {
     userId: string,
     vehicleId: string,
   ): Promise<VehicleEntity> {
-    const vehicle: VehicleEntity = await this.vehicleRepository.findOne({
-      where: { id: vehicleId },
-    });
-    if (!vehicle)
-      throw new BusinessLogicException(
-        'The vehicle with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const user: UserEntity = await this.userRepository.findOne({
-      where: { id: userId },
-      relations: ['vehicles'],
-    });
-    if (!user)
-      throw new BusinessLogicException(
-        'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const userVehicle: VehicleEntity = user.vehicles.find(
-      (e) => e.id === vehicle.id,
-    );
-
-    if (!userVehicle)
-      throw new BusinessLogicException(
-        'The vehicle with the given id is not associated to the user',
-        BusinessError.PRECONDITION_FAILED,
-      );
-
-    return userVehicle;
+    return await this.validate(userId, vehicleId);
   }
 
   async findVehiclesByUserId(userId: string): Promise<VehicleEntity[]> {
@@ -135,6 +106,18 @@ export class UserVehicleService {
   }
 
   async deleteVehicleUser(userId: string, vehicleId: string) {
+    await this.validate(userId, vehicleId);
+
+    const user: UserEntity = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['vehicles'],
+    });
+
+    user.vehicles = user.vehicles.filter((e) => e.id !== vehicleId);
+    await this.userRepository.save(user);
+  }
+
+  async validate(userId: string, vehicleId: string) {
     const vehicle: VehicleEntity = await this.vehicleRepository.findOne({
       where: { id: vehicleId },
     });
@@ -164,7 +147,6 @@ export class UserVehicleService {
         BusinessError.PRECONDITION_FAILED,
       );
 
-    user.vehicles = user.vehicles.filter((e) => e.id !== vehicleId);
-    await this.userRepository.save(user);
+    return userVehicle;
   }
 }

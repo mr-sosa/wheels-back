@@ -369,6 +369,46 @@ describe('UserVehicleService', () => {
     );
   });
 
+  it('associateVehiclesUser should throw an exception for not driver user', async () => {
+    let newUser = await userRepository.save({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      name: faker.name.fullName(),
+      phone: faker.phone.number(),
+      genre: 'MALE',
+      birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
+      photo: faker.image.imageUrl(),
+      idenficiationCard: faker.image.imageUrl(),
+      about: faker.datatype.string(),
+      score: faker.datatype.number({ min: 1, max: 5 }),
+      drivingPass: faker.image.imageUrl(),
+      state: 'ACTIVE',
+      verifiedMail: faker.datatype.boolean(),
+      verifiedPhone: faker.datatype.boolean(),
+      verifiedIC: faker.datatype.boolean(),
+      verifiedDrivingPass: faker.datatype.boolean(),
+      verifiedUser: false,
+      isDriver: false,
+      vehicles: vehiclesList,
+    });
+
+    const newVehicle: VehicleEntity = await vehicleRepository.save({
+      licensePlate: faker.datatype.string(7),
+      brand: faker.vehicle.vehicle(),
+      serie: faker.vehicle.model(),
+      model: faker.date.past().getFullYear().toString(),
+      color: faker.vehicle.color(),
+      soatExpedition: faker.date.past(),
+      soatExpiration: faker.date.future(),
+      type: 'CAR',
+      photo: faker.image.imageUrl(),
+    });
+
+    await expect(() =>
+      service.associateVehiclesUser(newUser.id, [newVehicle]),
+    ).rejects.toHaveProperty('message', 'The user is not a driver');
+  });
+
   it('deleteVehicleToUser should remove an vehicle from a user', async () => {
     const vehicle: VehicleEntity = vehiclesList[0];
 

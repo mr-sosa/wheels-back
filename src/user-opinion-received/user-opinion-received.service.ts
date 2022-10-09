@@ -46,36 +46,7 @@ export class UserOpinionReceivedService {
     userId: string,
     opinionId: string,
   ): Promise<OpinionEntity> {
-    const opinion: OpinionEntity = await this.opinionRepository.findOne({
-      where: { id: opinionId },
-    });
-    if (!opinion)
-      throw new BusinessLogicException(
-        'The opinionReceived with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const user: UserEntity = await this.userRepository.findOne({
-      where: { id: userId },
-      relations: ['opinionsReceived'],
-    });
-    if (!user)
-      throw new BusinessLogicException(
-        'The user with the given id was not found',
-        BusinessError.NOT_FOUND,
-      );
-
-    const userOpinion: OpinionEntity = user.opinionsReceived.find(
-      (e) => e.id === opinion.id,
-    );
-
-    if (!userOpinion)
-      throw new BusinessLogicException(
-        'The opinionReceived with the given id is not associated to the user',
-        BusinessError.PRECONDITION_FAILED,
-      );
-
-    return userOpinion;
+    return await this.validate(userId, opinionId);
   }
 
   async findOpinionsByUserId(userId: string): Promise<OpinionEntity[]> {
@@ -123,6 +94,20 @@ export class UserOpinionReceivedService {
   }
 
   async deleteOpinionUser(userId: string, opinionId: string) {
+    await this.validate(userId, opinionId);
+
+    const user: UserEntity = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['opinionsReceived'],
+    });
+
+    user.opinionsReceived = user.opinionsReceived.filter(
+      (e) => e.id !== opinionId,
+    );
+    await this.userRepository.save(user);
+  }
+
+  async validate(userId: string, opinionId: string) {
     const opinion: OpinionEntity = await this.opinionRepository.findOne({
       where: { id: opinionId },
     });
@@ -152,9 +137,6 @@ export class UserOpinionReceivedService {
         BusinessError.PRECONDITION_FAILED,
       );
 
-    user.opinionsReceived = user.opinionsReceived.filter(
-      (e) => e.id !== opinionId,
-    );
-    await this.userRepository.save(user);
+    return userOpinion;
   }
 }
