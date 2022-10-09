@@ -26,6 +26,7 @@ import { UserVehicleModule } from './user-vehicle/user-vehicle.module';
 import { UserPreferenceModule } from './user-preference/user-preference.module';
 import { UserOpinionMadeModule } from './user-opinion-made/user-opinion-made.module';
 import { UserOpinionReceivedModule } from './user-opinion-received/user-opinion-received.module';
+import { UserAddressModule } from './user-address/user-address.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { UserOpinionReceivedModule } from './user-opinion-received/user-opinion-
     UserPreferenceModule,
     UserOpinionMadeModule,
     UserOpinionReceivedModule,
+    UserAddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
