@@ -15,14 +15,15 @@ export class UserOpinionReceivedService {
     private readonly userRepository: Repository<UserEntity>,
 
     @InjectRepository(OpinionEntity)
-    private readonly opinionRepository: Repository<OpinionEntity>,
+    private readonly opinionReceivedRepository: Repository<OpinionEntity>,
   ) {}
 
   async addOpinionUser(userId: string, opinionId: string): Promise<UserEntity> {
-    const opinion: OpinionEntity = await this.opinionRepository.findOne({
-      where: { id: opinionId },
-    });
-    if (!opinion)
+    const opinionReceived: OpinionEntity =
+      await this.opinionReceivedRepository.findOne({
+        where: { id: opinionId },
+      });
+    if (!opinionReceived)
       throw new BusinessLogicException(
         'The opinionReceived with the given id was not found',
         BusinessError.NOT_FOUND,
@@ -38,7 +39,7 @@ export class UserOpinionReceivedService {
         BusinessError.NOT_FOUND,
       );
 
-    user.opinionsReceived = [...user.opinionsReceived, opinion];
+    user.opinionsReceived = [...user.opinionsReceived, opinionReceived];
     return await this.userRepository.save(user);
   }
 
@@ -79,10 +80,11 @@ export class UserOpinionReceivedService {
       );
 
     for (let i = 0; i < opinions.length; i++) {
-      const opinion: OpinionEntity = await this.opinionRepository.findOne({
-        where: { id: opinions[i].id },
-      });
-      if (!opinion)
+      const opinionReceived: OpinionEntity =
+        await this.opinionReceivedRepository.findOne({
+          where: { id: opinions[i].id },
+        });
+      if (!opinionReceived)
         throw new BusinessLogicException(
           'The opinionReceived with the given id was not found',
           BusinessError.NOT_FOUND,
@@ -108,10 +110,11 @@ export class UserOpinionReceivedService {
   }
 
   async validate(userId: string, opinionId: string) {
-    const opinion: OpinionEntity = await this.opinionRepository.findOne({
-      where: { id: opinionId },
-    });
-    if (!opinion)
+    const opinionReceived: OpinionEntity =
+      await this.opinionReceivedRepository.findOne({
+        where: { id: opinionId },
+      });
+    if (!opinionReceived)
       throw new BusinessLogicException(
         'The opinionReceived with the given id was not found',
         BusinessError.NOT_FOUND,
@@ -128,7 +131,7 @@ export class UserOpinionReceivedService {
       );
 
     const userOpinion: OpinionEntity = user.opinionsReceived.find(
-      (e) => e.id === opinion.id,
+      (e) => e.id === opinionReceived.id,
     );
 
     if (!userOpinion)

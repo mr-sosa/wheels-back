@@ -15,14 +15,16 @@ export class UserOpinionMadeService {
     private readonly userRepository: Repository<UserEntity>,
 
     @InjectRepository(OpinionEntity)
-    private readonly opinionRepository: Repository<OpinionEntity>,
+    private readonly opinionMadeRepository: Repository<OpinionEntity>,
   ) {}
 
   async addOpinionUser(userId: string, opinionId: string): Promise<UserEntity> {
-    const opinion: OpinionEntity = await this.opinionRepository.findOne({
-      where: { id: opinionId },
-    });
-    if (!opinion)
+    const opinionMade: OpinionEntity = await this.opinionMadeRepository.findOne(
+      {
+        where: { id: opinionId },
+      },
+    );
+    if (!opinionMade)
       throw new BusinessLogicException(
         'The opinionMade with the given id was not found',
         BusinessError.NOT_FOUND,
@@ -38,7 +40,7 @@ export class UserOpinionMadeService {
         BusinessError.NOT_FOUND,
       );
 
-    user.opinionsMade = [...user.opinionsMade, opinion];
+    user.opinionsMade = [...user.opinionsMade, opinionMade];
     return await this.userRepository.save(user);
   }
 
@@ -79,10 +81,11 @@ export class UserOpinionMadeService {
       );
 
     for (let i = 0; i < opinions.length; i++) {
-      const opinion: OpinionEntity = await this.opinionRepository.findOne({
-        where: { id: opinions[i].id },
-      });
-      if (!opinion)
+      const opinionMade: OpinionEntity =
+        await this.opinionMadeRepository.findOne({
+          where: { id: opinions[i].id },
+        });
+      if (!opinionMade)
         throw new BusinessLogicException(
           'The opinionMade with the given id was not found',
           BusinessError.NOT_FOUND,
@@ -106,10 +109,12 @@ export class UserOpinionMadeService {
   }
 
   async validate(userId: string, opinionId: string) {
-    const opinion: OpinionEntity = await this.opinionRepository.findOne({
-      where: { id: opinionId },
-    });
-    if (!opinion)
+    const opinionMade: OpinionEntity = await this.opinionMadeRepository.findOne(
+      {
+        where: { id: opinionId },
+      },
+    );
+    if (!opinionMade)
       throw new BusinessLogicException(
         'The opinionMade with the given id was not found',
         BusinessError.NOT_FOUND,
@@ -126,7 +131,7 @@ export class UserOpinionMadeService {
       );
 
     const userOpinion: OpinionEntity = user.opinionsMade.find(
-      (e) => e.id === opinion.id,
+      (e) => e.id === opinionMade.id,
     );
 
     if (!userOpinion)
