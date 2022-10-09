@@ -22,6 +22,9 @@ import { RouteEntity } from './route/route.entity';
 import { StepEntity } from './step/step.entity';
 import { UserEntity } from './user/user.entity';
 import { VehicleEntity } from './vehicle/vehicle.entity';
+import { UserVehicleModule } from './user-vehicle/user-vehicle.module';
+import { UserPreferenceModule } from './user-preference/user-preference.module';
+import { UserOpinionMadeModule } from './user-opinion-made/user-opinion-made.module';
 
 @Module({
   imports: [
@@ -58,6 +61,9 @@ import { VehicleEntity } from './vehicle/vehicle.entity';
     UserModule,
     VehicleModule,
     OpinionModule,
+    UserVehicleModule,
+    UserPreferenceModule,
+    UserOpinionMadeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -85,7 +85,7 @@ export class UserEntity {
   */
   @JoinTable()
   @ManyToMany(() => PreferenceEntity, (preferences) => preferences.users)
-  preferences: PerformanceEntry[];
+  preferences: PreferenceEntity[];
 
   /*
   PassengerTravel
