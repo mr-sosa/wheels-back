@@ -44,10 +44,10 @@ export class UserEntity {
   idenficiationCard: string;
 
   @Column()
-  about: String;
+  about: string;
 
   @Column()
-  score: Number;
+  score: number;
 
   @Column()
   drivingPass: string;
