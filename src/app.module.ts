@@ -28,6 +28,7 @@ import { UserOpinionMadeModule } from './user-opinion-made/user-opinion-made.mod
 import { UserOpinionReceivedModule } from './user-opinion-received/user-opinion-received.module';
 import { UserAddressModule } from './user-address/user-address.module';
 import { UserPassengerTravelModule } from './user-passenger-travel/user-passenger-travel.module';
+import { UserDriverTravelByDriverModule } from './user-driver-travel-by-driver/user-driver-travel-by-driver.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { UserPassengerTravelModule } from './user-passenger-travel/user-passenge
     UserOpinionReceivedModule,
     UserAddressModule,
     UserPassengerTravelModule,
+    UserDriverTravelByDriverModule,
   ],
   controllers: [AppController],
   providers: [AppService],
