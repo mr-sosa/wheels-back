@@ -72,7 +72,7 @@ export class DriverTravelEntity {
     () => PassengerTravelEntity,
     (passengerTravels) => passengerTravels.driverTravel,
   )
-  passengerTravels: PassengerTravelEntity;
+  passengerTravels: PassengerTravelEntity[];
 
   /*
   Route
