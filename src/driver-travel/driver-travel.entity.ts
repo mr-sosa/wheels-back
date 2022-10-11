@@ -36,7 +36,7 @@ export class DriverTravelEntity {
     () => PreferenceEntity,
     (preferences) => preferences.driverTravels,
   )
-  preferences: PerformanceEntry[];
+  preferences: PreferenceEntity[];
 
   /*
   User
