@@ -1,12 +1,16 @@
 import { IsNotEmpty, IsString, IsNumber, IsDateString } from 'class-validator';
-export class DriverTravelDto {
+export class PassengerTravelDto {
   @IsNotEmpty()
-  @IsDateString({ strict: true } as any)
-  readonly date: Date;
+  @IsNumber()
+  readonly cost: number;
 
   @IsNotEmpty()
   @IsNumber()
-  readonly spaceAvailable: number;
+  readonly quota: number;
+
+  @IsNotEmpty()
+  @IsDateString({ strict: true } as any)
+  readonly date: Date;
 
   @IsNotEmpty()
   @IsString()
