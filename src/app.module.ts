@@ -33,6 +33,7 @@ import { PassengerTravelUserModule } from './passenger-travel-user/passenger-tra
 import { DriverTravelPreferenceModule } from './driver-travel-preference/driver-travel-preference.module';
 import { DriverTravelRouteModule } from './driver-travel-route/driver-travel-route.module';
 import { DriverTravelPassengerTravelModule } from './driver-travel-passenger-travel/driver-travel-passenger-travel.module';
+import { DriverTravelUserModule } from './driver-travel-user/driver-travel-user.module';
 
 @Module({
   imports: [
@@ -80,6 +81,7 @@ import { DriverTravelPassengerTravelModule } from './driver-travel-passenger-tra
     DriverTravelPreferenceModule,
     DriverTravelRouteModule,
     DriverTravelPassengerTravelModule,
+    DriverTravelUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
