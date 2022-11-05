@@ -55,6 +55,13 @@ export class UserService {
   }
 
   async create(user: UserEntity): Promise<UserEntity> {
+    user.state = 'ACTIVE';
+    user.isDriver = false;
+    user.verifiedMail = false;
+    user.verifiedPhone = false;
+    user.verifiedIC = false;
+    user.verifiedUser = false;
+    user.verifiedDrivingPass = false;
     await this.verifyEnumerations(user);
     return await this.userRepository.save(user);
   }

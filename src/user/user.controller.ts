@@ -47,4 +47,11 @@ export class UserController {
   async delete(@Param('userId') userId: string) {
     return await this.userService.delete(userId);
   }
+
+  @Put(':userId/convertToDriver')
+  async convertToDriver(@Param('userId') userId: string) {
+    let user = await this.userService.findOne(userId);
+    user.isDriver = true;
+    return await this.userService.update(userId, user);
+  }
 }

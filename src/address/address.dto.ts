@@ -28,11 +28,9 @@ export class AddressDto {
   @IsNumber()
   readonly firstNumber: number;
 
-  @IsNotEmpty()
   @IsString()
   readonly firstLetter: string;
 
-  @IsNotEmpty()
   @IsString()
   readonly fisrtQuadrant: string;
 
@@ -40,11 +38,9 @@ export class AddressDto {
   @IsNumber()
   readonly secondNumber: number;
 
-  @IsNotEmpty()
   @IsString()
   readonly secondLetter: string;
 
-  @IsNotEmpty()
   @IsString()
   readonly secondQuadrant: string;
 
@@ -52,7 +48,6 @@ export class AddressDto {
   @IsNumber()
   readonly plateNumber: number;
 
-  @IsNotEmpty()
   @IsString()
   readonly description: string;
 }

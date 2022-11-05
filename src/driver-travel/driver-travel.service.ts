@@ -55,6 +55,7 @@ export class DriverTravelService {
   }
 
   async create(driverTravel: DriverTravelEntity): Promise<DriverTravelEntity> {
+    driverTravel.state = 'OPEN';
     await this.verifyEnumerations(driverTravel);
     return await this.driverTravelRepository.save(driverTravel);
   }

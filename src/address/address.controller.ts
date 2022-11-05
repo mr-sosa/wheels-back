@@ -15,7 +15,7 @@ import { AddressDto } from './address.dto';
 import { AddressEntity } from './address.entity';
 import { AddressService } from './address.service';
 
-@Controller('addresss')
+@Controller('addresses')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}

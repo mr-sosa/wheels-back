@@ -56,4 +56,11 @@ export class DriverTravelController {
   async delete(@Param('driverTravelId') driverTravelId: string) {
     return await this.driverTravelService.delete(driverTravelId);
   }
+
+  @Post(':driverTravelId/reserved')
+  async reservedTravel(@Param('driverTravelId') driverTravelId: string) {
+    let driverTravel = await this.driverTravelService.findOne(driverTravelId);
+    driverTravel.spaceAvailable--;
+    return await this.driverTravelService.update(driverTravelId, driverTravel);
+  }
 }

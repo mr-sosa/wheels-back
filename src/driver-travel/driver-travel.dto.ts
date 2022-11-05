@@ -7,8 +7,4 @@ export class DriverTravelDto {
   @IsNotEmpty()
   @IsNumber()
   readonly spaceAvailable: number;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly state: string;
 }
