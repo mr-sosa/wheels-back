@@ -8,6 +8,7 @@ import {
   Body,
   Param,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { plainToInstance } from 'class-transformer';
@@ -21,8 +22,8 @@ export class DriverTravelController {
   constructor(private readonly driverTravelService: DriverTravelService) {}
 
   @Get()
-  async findAll() {
-    return await this.driverTravelService.findAll();
+  async findAll(@Query('state') state: string) {
+    return await this.driverTravelService.findAll(state);
   }
 
   @Get(':driverTravelId')

@@ -15,7 +15,7 @@ export class DriverTravelService {
     private readonly driverTravelRepository: Repository<DriverTravelEntity>,
   ) {}
 
-  async findAll(): Promise<DriverTravelEntity[]> {
+  async findAll(state: string): Promise<DriverTravelEntity[]> {
     return await this.driverTravelRepository.find({
       relations: [
         'preferences',
@@ -27,6 +27,9 @@ export class DriverTravelService {
         'passengerTravels',
         'routes',
       ],
+      where: {
+        state: state,
+      },
     });
   }
 
