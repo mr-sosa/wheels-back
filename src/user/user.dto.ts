@@ -19,11 +19,9 @@ export class UserDto {
   @IsString()
   readonly name: string;
 
-  @IsNotEmpty()
   @IsString()
   readonly phone: string;
 
-  @IsNotEmpty()
   @IsString()
   readonly genre: string;
 

@@ -33,6 +33,9 @@ export class AddressEntity {
   name: string;
 
   @Column()
+  address: string;
+
+  @Column()
   mainRoad: string;
 
   @Column()

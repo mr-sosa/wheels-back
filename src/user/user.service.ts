@@ -8,7 +8,7 @@ import {
 import { UserEntity } from './user.entity';
 
 const state = ['ACTIVE', 'INACTIVE'];
-const genre = ['MALE', 'FEMALE', 'OTHER'];
+const genre = ['MALE', 'FEMALE', 'OTHER', ''];
 @Injectable()
 export class UserService {
   constructor(

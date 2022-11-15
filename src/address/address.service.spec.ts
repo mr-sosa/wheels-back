@@ -39,6 +39,7 @@ describe('AddressService', () => {
         city: faker.address.cityName(),
         location: faker.datatype.string(),
         name: faker.datatype.string(),
+        address: faker.datatype.string(),
         mainRoad: 'STREET',
         firstNumber: faker.datatype.number({ min: 1 }),
         firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
@@ -68,6 +69,7 @@ describe('AddressService', () => {
     expect(address.city).toEqual(storedAddress.city);
     expect(address.location).toEqual(storedAddress.location);
     expect(address.name).toEqual(storedAddress.name);
+    expect(address.address).toEqual(storedAddress.address);
     expect(address.mainRoad).toEqual(storedAddress.mainRoad);
     expect(address.firstNumber).toEqual(storedAddress.firstNumber);
     expect(address.firstLetter).toEqual(storedAddress.firstLetter);
@@ -94,6 +96,7 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
+      address: faker.datatype.string(),
       mainRoad: 'STREET',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
@@ -126,6 +129,7 @@ describe('AddressService', () => {
     expect(address.city).toEqual(storedAddress.city);
     expect(address.location).toEqual(storedAddress.location);
     expect(address.name).toEqual(storedAddress.name);
+    expect(address.address).toEqual(storedAddress.address);
     expect(address.mainRoad).toEqual(storedAddress.mainRoad);
     expect(address.firstNumber).toEqual(storedAddress.firstNumber);
     expect(address.firstLetter).toEqual(storedAddress.firstLetter);
@@ -145,6 +149,7 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
+      address: faker.datatype.string(),
       mainRoad: faker.datatype.string(),
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
@@ -176,6 +181,7 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
+      address: faker.datatype.string(),
       mainRoad: 'ROAD',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
@@ -207,6 +213,7 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
+      address: faker.datatype.string(),
       mainRoad: 'WAY',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
@@ -237,6 +244,7 @@ describe('AddressService', () => {
     address.city = faker.address.cityName();
     address.location = faker.datatype.string();
     address.name = faker.datatype.string();
+    address.address = faker.datatype.string();
     address.mainRoad = 'STREET';
     address.firstNumber = faker.datatype.number({ min: 1 });
     address.firstLetter = faker.datatype.string(1).toLocaleUpperCase();
@@ -263,6 +271,7 @@ describe('AddressService', () => {
     expect(address.city).toEqual(storedAddress.city);
     expect(address.location).toEqual(storedAddress.location);
     expect(address.name).toEqual(storedAddress.name);
+    expect(address.address).toEqual(storedAddress.address);
     expect(address.mainRoad).toEqual(storedAddress.mainRoad);
     expect(address.firstNumber).toEqual(storedAddress.firstNumber);
     expect(address.firstLetter).toEqual(storedAddress.firstLetter);
@@ -283,6 +292,7 @@ describe('AddressService', () => {
       city: faker.address.cityName(),
       location: faker.datatype.string(),
       name: faker.datatype.string(),
+      address: faker.datatype.string(),
       mainRoad: 'ROAD',
       firstNumber: faker.datatype.number({ min: 1 }),
       firstLetter: faker.datatype.string(1).toLocaleUpperCase(),
