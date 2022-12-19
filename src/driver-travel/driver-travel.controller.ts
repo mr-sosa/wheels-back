@@ -22,8 +22,27 @@ export class DriverTravelController {
   constructor(private readonly driverTravelService: DriverTravelService) {}
 
   @Get()
-  async findAll(@Query('state') state: string) {
-    return await this.driverTravelService.findAll(state);
+  async findAll(
+    @Query('p') page: number,
+    @Query('state') state: string,
+    @Query('date') date: Date,
+    @Query('quota') quota: number,
+    @Query('originLat') originLat: string,
+    @Query('originLng') originLng: string,
+    @Query('destinationLat') destinationLat: string,
+    @Query('destinationLng') destinationLng: string,
+  ) {
+    let data = await this.driverTravelService.findAll(
+      page,
+      state,
+      date,
+      quota,
+      originLat,
+      originLng,
+      destinationLat,
+      destinationLng,
+    );
+    return { page: page, numItems: data.length, data: data };
   }
 
   @Get(':driverTravelId')

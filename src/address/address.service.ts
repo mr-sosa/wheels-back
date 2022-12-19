@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import {
   BusinessError,
   BusinessLogicException,
@@ -45,7 +45,9 @@ export class AddressService {
     private readonly addressRepository: Repository<AddressEntity>,
   ) {}
 
-  async findAll(): Promise<AddressEntity[]> {
+  async findAll(latitude: string, longitude: string): Promise<AddressEntity[]> {
+    let lat = parseInt(latitude);
+    let lon = parseInt(longitude);
     return await this.addressRepository.find({
       relations: [
         'users',
@@ -55,6 +57,12 @@ export class AddressService {
         'destinationDriverTravels',
         'point',
       ],
+      where: {
+        point: {
+          latitude: Between(lat - 0.01, lat + 0.01),
+          longitude: Between(lon - 0.01, lon - 0.01),
+        },
+      },
     });
   }
 
@@ -80,7 +88,6 @@ export class AddressService {
   }
 
   async create(address: AddressEntity): Promise<AddressEntity> {
-    await this.verifyEnumerations(address);
     return await this.addressRepository.save(address);
   }
 
@@ -103,7 +110,6 @@ export class AddressService {
         BusinessError.NOT_FOUND,
       );
 
-    await this.verifyEnumerations(address);
     return await this.addressRepository.save({
       ...persistedAddress,
       ...address,
@@ -129,26 +135,5 @@ export class AddressService {
       );
 
     await this.addressRepository.remove(address);
-  }
-
-  private async verifyEnumerations(address: AddressEntity) {
-    if (!MainRoad.includes(address.mainRoad)) {
-      throw new BusinessLogicException(
-        'Invalid mainRoad of address',
-        BusinessError.BAD_REQUEST,
-      );
-    }
-    if (!Quadrant.includes(address.fisrtQuadrant)) {
-      throw new BusinessLogicException(
-        'Invalid fisrtQuadrant of address',
-        BusinessError.BAD_REQUEST,
-      );
-    }
-    if (!Quadrant.includes(address.secondQuadrant)) {
-      throw new BusinessLogicException(
-        'Invalid secondQuadrant of address',
-        BusinessError.BAD_REQUEST,
-      );
-    }
   }
 }

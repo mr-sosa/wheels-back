@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { from, map, Observable } from 'rxjs';
 import {
   BusinessError,
   BusinessLogicException,
@@ -80,5 +81,27 @@ export class VehicleService {
         BusinessError.BAD_REQUEST,
       );
     }
+  }
+
+  async updateVehicleImageById(id: string, imagePath: string) {
+    const persistedVehicle: VehicleEntity =
+      await this.vehicleRepository.findOne({
+        where: { id },
+        relations: ['driverTravels', 'user'],
+      });
+    if (!persistedVehicle)
+      throw new BusinessLogicException(
+        'The vehicle with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+
+    persistedVehicle.photo = imagePath;
+    return from(this.vehicleRepository.save(persistedVehicle));
+  }
+
+  findImageNameByVehicleId(id: string): Observable<string> {
+    return from(this.findOne(id)).pipe(
+      map((vehicle: VehicleEntity) => vehicle.photo),
+    );
   }
 }

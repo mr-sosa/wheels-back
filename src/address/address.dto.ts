@@ -19,4 +19,10 @@ export class AddressDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
+
+  @IsNumber()
+  readonly lat: number;
+
+  @IsNumber()
+  readonly lng: number;
 }

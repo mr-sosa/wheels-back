@@ -36,31 +36,13 @@ export class AddressEntity {
   address: string;
 
   @Column()
-  mainRoad: string;
-
-  @Column()
-  firstNumber: number;
-
-  @Column()
-  firstLetter: string;
-
-  @Column()
-  fisrtQuadrant: string;
-
-  @Column()
-  secondNumber: number;
-
-  @Column()
-  secondLetter: string;
-
-  @Column()
-  secondQuadrant: string;
-
-  @Column()
-  plateNumber: number;
-
-  @Column()
   description: string;
+
+  @Column('float')
+  lat: number;
+
+  @Column('float')
+  lng: number;
 
   /*
   User

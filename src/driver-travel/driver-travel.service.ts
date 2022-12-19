@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Between,
+  Equal,
+  MoreThan,
+  MoreThanOrEqual,
+  Raw,
+  Repository,
+} from 'typeorm';
 import {
   BusinessError,
   BusinessLogicException,
@@ -15,8 +22,19 @@ export class DriverTravelService {
     private readonly driverTravelRepository: Repository<DriverTravelEntity>,
   ) {}
 
-  async findAll(state: string): Promise<DriverTravelEntity[]> {
+  async findAll(
+    page: number,
+    state: string,
+    date: Date,
+    quota: number,
+    originLat: string,
+    originLng: string,
+    destinationLat: string,
+    destinationLng: string,
+  ): Promise<DriverTravelEntity[]> {
     return await this.driverTravelRepository.find({
+      take: 10,
+      skip: page === undefined ? 0 : (page - 1) * 10,
       relations: [
         'preferences',
         'driver',
@@ -29,6 +47,44 @@ export class DriverTravelService {
       ],
       where: {
         state: state,
+        date: date === undefined ? null : MoreThanOrEqual(new Date(date)),
+        spaceAvailable: quota === undefined ? null : MoreThanOrEqual(quota),
+        origin: {
+          lat:
+            originLat === undefined
+              ? null
+              : Between(
+                  parseFloat(originLat) - 0.01,
+                  parseFloat(originLat) + 0.01,
+                ),
+          lng:
+            originLng === undefined
+              ? null
+              : Between(
+                  parseFloat(originLng) - 0.01,
+                  parseFloat(originLng) + 0.01,
+                ),
+        },
+
+        destination: {
+          lat:
+            destinationLat === undefined
+              ? null
+              : Between(
+                  parseFloat(destinationLat) - 0.01,
+                  parseFloat(destinationLat) + 0.01,
+                ),
+          lng:
+            destinationLng === undefined
+              ? null
+              : Between(
+                  parseFloat(destinationLng) - 0.01,
+                  parseFloat(destinationLng) + 0.01,
+                ),
+        },
+      },
+      order: {
+        date: 'ASC',
       },
     });
   }

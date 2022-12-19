@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { from, map, Observable } from 'rxjs';
 import { Repository } from 'typeorm';
 import {
   BusinessError,
@@ -16,8 +17,15 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(
+    page: number,
+    email: string,
+    isDriver: boolean,
+  ): Promise<UserEntity[]> {
     return await this.userRepository.find({
+      take: 10,
+      skip: page === undefined ? 0 : (page - 1) * 10,
+      where: { email: email, isDriver: isDriver },
       relations: [
         'addresses',
         'preferences',
@@ -57,8 +65,6 @@ export class UserService {
   async create(user: UserEntity): Promise<UserEntity> {
     user.state = 'ACTIVE';
     user.isDriver = false;
-    user.verifiedMail = false;
-    user.verifiedPhone = false;
     user.verifiedIC = false;
     user.verifiedUser = false;
     user.verifiedDrivingPass = false;
@@ -128,5 +134,33 @@ export class UserService {
         BusinessError.BAD_REQUEST,
       );
     }
+  }
+
+  async updateUserImageById(id: string, imagePath: string) {
+    const persistedUser: UserEntity = await this.userRepository.findOne({
+      where: { id },
+      relations: [
+        'addresses',
+        'preferences',
+        'passengerTravels',
+        'vehicles',
+        'driverTravelsByDriver',
+        'driverTravelByPassenger',
+        'opinionsReceived',
+        'opinionsMade',
+      ],
+    });
+    if (!persistedUser)
+      throw new BusinessLogicException(
+        'The user with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+
+    persistedUser.photo = imagePath;
+    return from(this.userRepository.save(persistedUser));
+  }
+
+  findImageNameByUserId(id: string): Observable<string> {
+    return from(this.findOne(id)).pipe(map((user: UserEntity) => user.photo));
   }
 }

@@ -34,8 +34,8 @@ describe('PointService', () => {
     pointsList = [];
     for (let i = 0; i < 5; i++) {
       const point: PointEntity = await repository.save({
-        latitude: faker.address.latitude(),
-        longitude: faker.address.longitude(),
+        latitude: parseFloat(faker.address.latitude()),
+        longitude: parseFloat(faker.address.longitude()),
       });
       pointsList.push(point);
     }
@@ -65,8 +65,8 @@ describe('PointService', () => {
   it('create should return a new point', async () => {
     const point: PointEntity = {
       id: '',
-      latitude: faker.address.latitude(),
-      longitude: faker.address.longitude(),
+      latitude: parseFloat(faker.address.latitude()),
+      longitude: parseFloat(faker.address.longitude()),
       address: null,
       stepStart: null,
       stepEnd: null,
@@ -85,8 +85,8 @@ describe('PointService', () => {
 
   it('update should modify a point', async () => {
     const point: PointEntity = pointsList[0];
-    point.latitude = faker.address.latitude();
-    point.longitude = faker.address.longitude();
+    point.latitude = parseFloat(faker.address.latitude());
+    point.longitude = parseFloat(faker.address.longitude());
     const updatedPoint: PointEntity = await service.update(point.id, point);
     expect(updatedPoint).not.toBeNull();
     const storedPoint: PointEntity = await repository.findOne({
@@ -101,8 +101,8 @@ describe('PointService', () => {
     let point: PointEntity = pointsList[0];
     point = {
       ...point,
-      latitude: faker.address.latitude(),
-      longitude: faker.address.longitude(),
+      latitude: parseFloat(faker.address.latitude()),
+      longitude: parseFloat(faker.address.longitude()),
     };
     await expect(() => service.update('0', point)).rejects.toHaveProperty(
       'message',

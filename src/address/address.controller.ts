@@ -8,6 +8,7 @@ import {
   Body,
   Param,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { plainToInstance } from 'class-transformer';
@@ -21,8 +22,8 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Get()
-  async findAll() {
-    return await this.addressService.findAll();
+  async findAll(@Query('lat') lat: string, @Query('lon') lon: string) {
+    return await this.addressService.findAll(lat, lon);
   }
 
   @Get(':addressId')

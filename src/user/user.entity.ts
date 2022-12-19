@@ -38,6 +38,9 @@ export class UserEntity {
   birthDate: Date;
 
   @Column()
+  createdDate: Date;
+
+  @Column()
   photo: string;
 
   @Column()

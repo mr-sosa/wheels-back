@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddressModule } from './address/address.module';
@@ -36,16 +36,16 @@ import { DriverTravelRouteModule } from './driver-travel-route/driver-travel-rou
 import { DriverTravelPassengerTravelModule } from './driver-travel-passenger-travel/driver-travel-passenger-travel.module';
 import { DriverTravelUserModule } from './driver-travel-user/driver-travel-user.module';
 import { RouteStepModule } from './route-step/route-step.module';
-
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      url:
+        <string>process.env.IS_PRODUCTION === 'TRUE'
+          ? process.env.DB_URL_PROD
+          : process.env.DB_URL_DEV,
+      ssl: <string>process.env.IS_PRODUCTION === 'TRUE',
       entities: [
         AddressEntity,
         DriverTravelEntity,
