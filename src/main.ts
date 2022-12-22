@@ -12,7 +12,7 @@ async function bootstrap() {
     .setTitle('Wheels')
     .setDescription('A new carpooling service')
     .setVersion('1.0')
-    .addTag('carpooling')
+    .addTag('Carpooling')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
