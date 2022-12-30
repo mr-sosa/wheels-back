@@ -46,8 +46,6 @@ export class AddressService {
   ) {}
 
   async findAll(latitude: string, longitude: string): Promise<AddressEntity[]> {
-    let lat = parseInt(latitude);
-    let lon = parseInt(longitude);
     return await this.addressRepository.find({
       relations: [
         'users',
@@ -58,10 +56,17 @@ export class AddressService {
         'point',
       ],
       where: {
-        point: {
-          latitude: Between(lat - 0.01, lat + 0.01),
-          longitude: Between(lon - 0.01, lon - 0.01),
-        },
+        lat:
+          latitude === undefined
+            ? null
+            : Between(parseFloat(latitude) - 0.01, parseFloat(latitude) + 0.01),
+        lng:
+          longitude === undefined
+            ? null
+            : Between(
+                parseFloat(longitude) - 0.01,
+                parseFloat(longitude) + 0.01,
+              ),
       },
     });
   }
